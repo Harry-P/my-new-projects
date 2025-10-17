@@ -15,8 +15,8 @@ Advanced editing, search capabilities, multi-cursor operations, and version cont
 ### **Part 3: Development Workflow (Episodes 9-12)**
 Debugging, workspace management, customization, and keyboard shortcuts.
 
-### **Part 4: Advanced Features (Episodes 13-19)**
-Code snippets, remote development, advanced workspaces, tips and tricks, extension development, performance optimization, and external tool integration.
+### **Part 4: Advanced Features (Episodes 13-20)**
+Code snippets, remote development, advanced workspaces, tips and tricks, extension development, performance optimization, external tool integration, and advanced debugging techniques.
 
 ---
 
@@ -154,6 +154,13 @@ Code snippets, remote development, advanced workspaces, tips and tricks, extensi
 - Database integration and cloud service connections
 - CI/CD pipeline integration and container workflows
 - Custom tool integration and security best practices
+
+### 🔍 **Episode 20: Advanced Debugging Techniques**
+**Duration:** 45-50 minutes | **Level:** Expert
+- Advanced breakpoint strategies (conditional, logpoints, hit counts)
+- Multi-language and remote debugging configurations
+- Performance debugging and profiling techniques
+- Production debugging workflows and troubleshooting
 
 ---
 
