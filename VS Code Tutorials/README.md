@@ -393,8 +393,8 @@ After mastering this series, consider exploring:
 - **Professional focus:** Team collaboration and enterprise development
 
 ### Version 1.0 (Previous)
-- Initial release with episodes 1-15
-- Basic to intermediate coverage
+- Initial release with episodes 1-15 (basic to intermediate coverage)
+- Foundation, productivity, and workflow episodes
 - Practical exercises and real-world examples
 - Cross-platform compatibility considerations
 
