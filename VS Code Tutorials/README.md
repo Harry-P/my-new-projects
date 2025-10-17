@@ -15,8 +15,8 @@ Advanced editing, search capabilities, multi-cursor operations, and version cont
 ### **Part 3: Development Workflow (Episodes 9-12)**
 Debugging, workspace management, customization, and keyboard shortcuts.
 
-### **Part 4: Advanced Features (Episodes 13-17)**
-Code snippets, remote development, advanced workspaces, tips and tricks, and extension development.
+### **Part 4: Advanced Features (Episodes 13-19)**
+Code snippets, remote development, advanced workspaces, tips and tricks, extension development, performance optimization, and external tool integration.
 
 ---
 
@@ -140,6 +140,20 @@ Code snippets, remote development, advanced workspaces, tips and tricks, and ext
 - Understanding extension architecture and lifecycle
 - Creating commands, status bar items, and tree views
 - Testing, packaging, and publishing extensions
+
+### ⚡ **Episode 18: Performance Optimization & Large Codebases**
+**Duration:** 40-45 minutes | **Level:** Advanced
+- Understanding VS Code performance indicators
+- Optimizing workspace settings and file exclusions
+- Extension management and language server optimization
+- Memory management and troubleshooting techniques
+
+### 🔗 **Episode 19: API Integration & External Tools**
+**Duration:** 50-55 minutes | **Level:** Advanced
+- REST API testing with HTTP files and extensions
+- Database integration and cloud service connections
+- CI/CD pipeline integration and container workflows
+- Custom tool integration and security best practices
 
 ---
 
