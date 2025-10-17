@@ -21,6 +21,9 @@ Code snippets, remote development, advanced workspaces, tips and tricks, extensi
 ### **Part 5: Expert Development (Episodes 21-23)**
 Code quality analysis, live collaboration workflows, and AI-powered development with modern tools.
 
+### **Part 6: Professional & Enterprise (Episodes 24-26)**
+DevOps integration, polyglot development mastery, and enterprise-scale VS Code deployment and management.
+
 ---
 
 ## Episode Guide
@@ -185,6 +188,27 @@ Code quality analysis, live collaboration workflows, and AI-powered development 
 - AI-assisted code patterns and quality control
 - Advanced AI workflows for refactoring and documentation
 - Balancing AI assistance with code understanding and learning
+
+### 🚀 **Episode 24: DevOps Integration & CI/CD Workflows**
+**Duration:** 55-60 minutes | **Level:** Professional
+- Container development with Docker and Dev Containers
+- Infrastructure as Code with Terraform and ARM templates
+- CI/CD pipeline configuration for GitHub Actions and GitLab
+- Monitoring, security scanning, and deployment automation
+
+### 🔄 **Episode 25: Advanced Language Features & Polyglot Development**
+**Duration:** 50-55 minutes | **Level:** Professional
+- Language Server Protocol mastery and advanced configurations
+- Multi-language project organization and interoperability
+- WebAssembly integration and Foreign Function Interfaces
+- Cross-language debugging and performance optimization
+
+### 🏢 **Episode 26: Enterprise Development & Scaling VS Code**
+**Duration:** 60-65 minutes | **Level:** Enterprise
+- Enterprise authentication, security, and compliance
+- Centralized configuration management and policy enforcement
+- Enterprise-scale project management and team collaboration
+- Automated VS Code distribution and organizational deployment
 
 ---
 
