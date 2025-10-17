@@ -2,7 +2,7 @@
 
 ## Series Overview
 
-This comprehensive 15-episode tutorial series covers everything you need to know about Visual Studio Code, from absolute beginner to advanced power user. Each episode builds upon previous knowledge while being accessible to learners at different levels.
+This comprehensive tutorial series covers everything you need to know about Visual Studio Code, from absolute beginner to advanced power user. Each episode builds upon previous knowledge while being accessible to learners at different levels.
 
 ## Series Structure
 
@@ -15,8 +15,8 @@ Advanced editing, search capabilities, multi-cursor operations, and version cont
 ### **Part 3: Development Workflow (Episodes 9-12)**
 Debugging, workspace management, customization, and keyboard shortcuts.
 
-### **Part 4: Advanced Features (Episodes 13-15)**
-Code snippets, remote development, and expert-level tips and tricks.
+### **Part 4: Advanced Features (Episodes 13-17)**
+Code snippets, remote development, advanced workspaces, tips and tricks, and extension development.
 
 ---
 
@@ -126,6 +126,20 @@ Code snippets, remote development, and expert-level tips and tricks.
 - Performance optimization techniques
 - Extension development basics
 - Expert-level customizations
+
+### 📁 **Episode 16: Workspaces**
+**Duration:** 30-35 minutes | **Level:** Intermediate-Advanced
+- Single-folder vs multi-root workspaces
+- .code-workspace file anatomy and configuration
+- Workspace-specific settings and extensions
+- Tasks and launch configurations for workspaces
+
+### 🔧 **Episode 17: Extension Development Basics**
+**Duration:** 45-50 minutes | **Level:** Advanced
+- Setting up extension development environment
+- Understanding extension architecture and lifecycle
+- Creating commands, status bar items, and tree views
+- Testing, packaging, and publishing extensions
 
 ---
 
