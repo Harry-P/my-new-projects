@@ -221,7 +221,7 @@ Start with Episodes 1-4, then gradually work through Episodes 5-8. Take time to 
 Focus on Episodes 3-8 for core productivity features, then explore Episodes 9-12 based on your development needs.
 
 ### 🎯 **For Existing VS Code Users**
-Jump to specific episodes based on interest: debugging (9), customization (11-12), advanced features (13-18), expert techniques (19-23), enterprise development (24-26).
+Jump to specific episodes based on interest: debugging (9), customization (11-12), advanced features (13-20), expert techniques (21-23), enterprise development (24-26).
 
 ### 🎯 **For Team Leads/Mentors**
 Review episodes 1-12 for foundation understanding, then focus on episodes 16, 21-26 for team setup, quality standards, and enterprise workflows.
@@ -236,17 +236,14 @@ Focus on episodes 20-26 for advanced debugging, quality tools, collaboration, an
 
 ## Prerequisites by Episode
 
-| Episode Range | Prerequisites |
+| Episodes | Prerequisites |
 |---------------|--------------|
 | 1-2 | None - completely beginner-friendly |
 | 3-6 | Episodes 1-2 completed |
 | 7-8 | Episodes 1-6 completed, basic command line knowledge helpful |
 | 9-12 | Episodes 1-8 completed, basic programming knowledge |
-| 13-18 | Episodes 1-12 completed |
-| 19-23 | Episodes 1-18 completed, programming experience recommended |
-| 24-26 | Episodes 1-23 completed, professional development experience |
-| 18-20 | Episodes 1-17 completed, performance debugging experience helpful |
-| 21-23 | Episodes 1-20 completed, team development experience |
+| 13-20 | Episodes 1-12 completed, intermediate programming experience |
+| 21-23 | Episodes 1-20 completed, team development experience recommended |
 | 24-26 | Episodes 1-23 completed, enterprise/DevOps experience helpful |
 
 ---
@@ -272,8 +269,8 @@ Focus on episodes 20-26 for advanced debugging, quality tools, collaboration, an
 #### **Monthly Learning (4 weeks)**
 - Week 1: Episodes 1-6 (Foundations & Basic Productivity)
 - Week 2: Episodes 7-12 (Advanced Productivity & Workflow)
-- Week 3: Episodes 13-18 (Advanced Features & Performance)
-- Week 4: Episodes 19-23 (Expert Development & Quality)
+- Week 3: Episodes 13-20 (Advanced Features & Development)
+- Week 4: Episodes 21-26 (Expert Techniques & Enterprise)
 
 #### **Professional Development (6-8 weeks)**
 - Weeks 1-2: Episodes 1-8 (Master the basics)
@@ -303,17 +300,17 @@ Each episode includes hands-on exercises designed to reinforce learning:
 - **Episode 11:** Theme and appearance customization
 - **Episode 12:** Shortcut memorization and custom keybindings
 
-**Part 3: Advanced Features (Episodes 13-18)**
+**Part 3: Advanced Features (Episodes 13-20)**
 - **Episode 13:** Snippet library creation
 - **Episode 14:** Remote development setup
 - **Episode 15:** Advanced feature exploration
 - **Episode 16:** Performance optimization techniques
 - **Episode 17:** Security and code scanning setup
 - **Episode 18:** Advanced debugging scenarios
-
-**Part 4: Expert Development (Episodes 19-23)**
 - **Episode 19:** Extension development fundamentals
 - **Episode 20:** Advanced language features
+
+**Part 4: Expert Development (Episodes 21-23)**
 - **Episode 21:** Testing and quality assurance
 - **Episode 22:** CI/CD integration setup
 - **Episode 23:** Advanced refactoring techniques
