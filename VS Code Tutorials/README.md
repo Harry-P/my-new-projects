@@ -221,50 +221,65 @@ Start with Episodes 1-4, then gradually work through Episodes 5-8. Take time to 
 Focus on Episodes 3-8 for core productivity features, then explore Episodes 9-12 based on your development needs.
 
 ### 🎯 **For Existing VS Code Users**
-Jump to specific episodes based on interest: debugging (9), customization (11-12), advanced features (13-15).
+Jump to specific episodes based on interest: debugging (9), customization (11-12), advanced features (13-18), expert techniques (19-23), enterprise development (24-26).
 
 ### 🎯 **For Team Leads/Mentors**
-Review the entire series to understand capabilities, then focus on Episodes 10, 13-15 for team setup and advanced workflows.
+Review episodes 1-12 for foundation understanding, then focus on episodes 16, 21-26 for team setup, quality standards, and enterprise workflows.
+
+### 🎯 **For DevOps Engineers**
+Start with episodes 1-8 for basics, then jump to episodes 17-20, 24-26 for extension development, performance, and enterprise integration.
+
+### 🎯 **For Enterprise Architects**
+Focus on episodes 20-26 for advanced debugging, quality tools, collaboration, and enterprise-scale deployment.
 
 ---
 
 ## Prerequisites by Episode
 
-| Episode | Prerequisites |
-|---------|--------------|
+| Episode Range | Prerequisites |
+|---------------|--------------|
 | 1-2 | None - completely beginner-friendly |
 | 3-6 | Episodes 1-2 completed |
 | 7-8 | Episodes 1-6 completed, basic command line knowledge helpful |
-| 9 | Episodes 1-8 completed, basic programming knowledge |
-| 10-12 | Episodes 1-9 completed |
-| 13 | Episodes 1-12 completed |
-| 14 | Episodes 1-13 completed, SSH/Docker/WSL knowledge helpful |
-| 15 | Full series completion, advanced programming knowledge |
+| 9-12 | Episodes 1-8 completed, basic programming knowledge |
+| 13-18 | Episodes 1-12 completed |
+| 19-23 | Episodes 1-18 completed, programming experience recommended |
+| 24-26 | Episodes 1-23 completed, professional development experience |
+| 18-20 | Episodes 1-17 completed, performance debugging experience helpful |
+| 21-23 | Episodes 1-20 completed, team development experience |
+| 24-26 | Episodes 1-23 completed, enterprise/DevOps experience helpful |
 
 ---
 
 ## Estimated Time Investment
 
-- **Complete Series:** 7-8 hours of content
+- **Complete Series:** 12-14 hours of content
 - **Basic Proficiency:** Episodes 1-8 (≈3.5 hours)
 - **Intermediate Skills:** Episodes 1-12 (≈5.5 hours)
-- **Advanced Mastery:** Full series (≈8 hours)
+- **Advanced Mastery:** Episodes 1-20 (≈9 hours)
+- **Expert Level:** Episodes 1-23 (≈11 hours)
+- **Professional/Enterprise:** Full series 1-26 (≈13 hours)
 
 ### Recommended Learning Schedule
 
-#### **Intensive Weekend (2 days)**
-- Day 1: Episodes 1-8 (Foundations & Productivity)
-- Day 2: Episodes 9-15 (Workflow & Advanced)
+#### **Intensive Week (5 days)**
+- Day 1: Episodes 1-4 (Foundations)
+- Day 2: Episodes 5-8 (Productivity)
+- Day 3: Episodes 9-12 (Development Workflow)
+- Day 4: Episodes 13-16 (Advanced Features)
+- Day 5: Episodes 17-20 (Expert Techniques)
 
-#### **Weekly Learning (3 weeks)**
-- Week 1: Episodes 1-5 (Foundations)
-- Week 2: Episodes 6-10 (Productivity & Workflow)
-- Week 3: Episodes 11-15 (Customization & Advanced)
+#### **Monthly Learning (4 weeks)**
+- Week 1: Episodes 1-6 (Foundations & Basic Productivity)
+- Week 2: Episodes 7-12 (Advanced Productivity & Workflow)
+- Week 3: Episodes 13-18 (Advanced Features & Performance)
+- Week 4: Episodes 19-23 (Expert Development & Quality)
 
-#### **Self-Paced Learning (1-2 months)**
-- 1-2 episodes per week with practice time
-- Focus on applying concepts in real projects
-- Review and reinforce previous episodes
+#### **Professional Development (6-8 weeks)**
+- Weeks 1-2: Episodes 1-8 (Master the basics)
+- Weeks 3-4: Episodes 9-16 (Development workflows)
+- Weeks 5-6: Episodes 17-23 (Expert techniques)
+- Weeks 7-8: Episodes 24-26 (Enterprise & specialization)
 
 ---
 
@@ -272,21 +287,41 @@ Review the entire series to understand capabilities, then focus on Episodes 10, 
 
 Each episode includes hands-on exercises designed to reinforce learning:
 
+**Part 1: Foundation (Episodes 1-6)**
 - **Episode 1:** Basic navigation and file creation
 - **Episode 2:** Project setup and file management
 - **Episode 3:** Extension installation and configuration
 - **Episode 4:** Code editing and formatting practice
 - **Episode 5:** Search and replace patterns
 - **Episode 6:** Multi-cursor editing scenarios
+
+**Part 2: Productivity & Workflow (Episodes 7-12)**
 - **Episode 7:** Terminal workflow setup
 - **Episode 8:** Git workflow practice
 - **Episode 9:** Debugging session setup
 - **Episode 10:** Workspace configuration
 - **Episode 11:** Theme and appearance customization
 - **Episode 12:** Shortcut memorization and custom keybindings
+
+**Part 3: Advanced Features (Episodes 13-18)**
 - **Episode 13:** Snippet library creation
 - **Episode 14:** Remote development setup
 - **Episode 15:** Advanced feature exploration
+- **Episode 16:** Performance optimization techniques
+- **Episode 17:** Security and code scanning setup
+- **Episode 18:** Advanced debugging scenarios
+
+**Part 4: Expert Development (Episodes 19-23)**
+- **Episode 19:** Extension development fundamentals
+- **Episode 20:** Advanced language features
+- **Episode 21:** Testing and quality assurance
+- **Episode 22:** CI/CD integration setup
+- **Episode 23:** Advanced refactoring techniques
+
+**Part 5: Professional & Enterprise (Episodes 24-26)**
+- **Episode 24:** Team collaboration and standards
+- **Episode 25:** Enterprise development workflows
+- **Episode 26:** Specialized development environments
 
 ---
 
@@ -353,20 +388,28 @@ After mastering this series, consider exploring:
 
 ## Changelog
 
-### Version 1.0 (Current)
-- Initial release with all 15 episodes
-- Comprehensive coverage from beginner to advanced
+### Version 2.0 (Current)
+- **Major expansion:** Complete series with all 26 episodes
+- **Comprehensive coverage:** Beginner to enterprise-level content
+- **Structured learning:** Organized into 6 distinct parts
+- **Enhanced content:** Advanced features, security, and enterprise workflows
+- **Professional focus:** Team collaboration and enterprise development
+
+### Version 1.0 (Previous)
+- Initial release with episodes 1-15
+- Basic to intermediate coverage
 - Practical exercises and real-world examples
 - Cross-platform compatibility considerations
 
 ### Future Updates
 - Regular updates to reflect new VS Code features
-- Additional language-specific content
-- Community-contributed tips and tricks
-- Extended troubleshooting guides
+- Additional language-specific content and deep dives
+- Community-contributed tips and advanced techniques
+- Extended troubleshooting guides and performance optimization
+- Enterprise case studies and workflow examples
 
 ---
 
 **Happy Coding with VS Code! 🎉**
 
-*This tutorial series represents approximately 8 hours of comprehensive VS Code training, designed to take you from complete beginner to power user. Take your time, practice regularly, and don't hesitate to revisit episodes as you develop your skills.*
+*This tutorial series represents approximately 13 hours of comprehensive VS Code training, designed to take you from complete beginner to enterprise-level expert. The content is structured to support both intensive learning and self-paced exploration. Take your time, practice regularly, and don't hesitate to revisit episodes as you develop your skills.*
