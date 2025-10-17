@@ -263,8 +263,8 @@ Focus on episodes 20-26 for advanced debugging, quality tools, collaboration, an
 - Day 1: Episodes 1-4 (Foundations)
 - Day 2: Episodes 5-8 (Productivity)
 - Day 3: Episodes 9-12 (Development Workflow)
-- Day 4: Episodes 13-16 (Advanced Features)
-- Day 5: Episodes 17-20 (Expert Techniques)
+- Day 4: Episodes 13-17 (Advanced Features Start)
+- Day 5: Episodes 18-20 (Advanced Features Complete)
 
 #### **Monthly Learning (4 weeks)**
 - Week 1: Episodes 1-6 (Foundations & Basic Productivity)
