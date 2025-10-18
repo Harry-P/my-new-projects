@@ -300,6 +300,23 @@ You completed your first lesson! You're officially on your way to becoming a cod
 
 ---
 
+## 🎯 Next Steps
+
+### ✅ Complete the Practice:
+**Go to:** `Practice-Files/Lesson01-VS-Code-Basics/exploration-checklist.md`
+
+This interactive checklist will help you:
+- ✅ Verify VS Code is installed correctly
+- ✅ Find all the interface elements
+- ✅ Practice opening and exploring VS Code
+- ✅ Get hands-on experience with the basics
+
+**Don't skip this!** The practice is where you actually LEARN by DOING!
+
+---
+
+### 📚 When You're Done with Practice:
+
 **Ready for more? Let's go to [Lesson 2: Your First File](lesson02_first_file.md)!**
 
 ---

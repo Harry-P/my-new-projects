@@ -82,21 +82,46 @@ By the end of this series, you'll be able to:
 
 ## 🎮 How to Use This Course
 
+### 📂 Course Organization
+
+This course has **TWO parts** that work together:
+
+**📖 Lesson Files** (lesson01-10.md)
+- Educational content - READ these to LEARN
+- Explanations, examples, and concepts
+- Located in main folder
+
+**🎮 Practice Files** (Practice-Files/ folder)
+- Interactive exercises - DO these to PRACTICE
+- Actual code files with TODO tasks
+- Checklists, challenges, and projects
+
 ### For Each Lesson:
 
-1. **📖 Read** - Go through the lesson at your own pace
-2. **👀 Look** - Check out all the diagrams and pictures
-3. **✋ Try** - Do the hands-on activities
-4. **✨ Create** - Complete the mini-project
-5. **🎉 Celebrate** - Mark it complete and move forward!
+1. **📖 Read** - Open the lesson.md file (e.g., lesson01_what_is_vscode.md)
+2. **🎮 Practice** - Go to Practice-Files/LessonXX/ folder
+3. **✏️ Complete** - Fill in exercises, check boxes, write code
+4. **💾 Save** - Save your work (Ctrl+S)
+5. **✅ Check** - Compare with Answer-Keys when done
+6. **🎉 Celebrate** - Mark it complete and move forward!
 
 ### Study Tips:
 
 - 🕐 **Take Your Time** - No rush! Learn at your own speed
+- 📖 **Read First** - Always read the lesson BEFORE doing practice
+- 🎯 **Do ALL Practice** - Don't skip the interactive files!
 - 🤔 **Ask Questions** - Write down anything confusing
 - 🎨 **Have Fun** - Be creative with the projects
 - 🔄 **Practice** - Repeat lessons if needed
 - 👥 **Share** - Show your projects to friends and family
+
+### 📚 Quick Start Guide:
+
+**New to this course? Read these in order:**
+1. This README (you're here!)
+2. `COURSE-NAVIGATION-GUIDE.md` - Detailed course structure
+3. `HOW-TO-USE-PRACTICE-FILES.md` - Practice file instructions
+4. `lesson01_what_is_vscode.md` - Start learning!
 
 ---
 

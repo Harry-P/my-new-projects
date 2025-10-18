@@ -447,6 +447,23 @@ You just created and saved your first files! You're building real skills that pr
 
 ---
 
+## 🎯 Next Steps
+
+### ✅ Complete the Practice:
+**Go to:** `Practice-Files/Lesson02-Files/file-creation-exercises.md`
+
+This interactive exercise guide will help you:
+- ✅ Create 10+ different types of files
+- ✅ Practice saving and organizing
+- ✅ Build folder structures
+- ✅ Get comfortable with file management
+
+**Don't skip this!** You'll create real files and build muscle memory!
+
+---
+
+### 📚 When You're Done with Practice:
+
 **Ready to make VS Code look awesome? Let's go to [Lesson 3: Making VS Code Yours](lesson03_customization.md)!**
 
 ---
