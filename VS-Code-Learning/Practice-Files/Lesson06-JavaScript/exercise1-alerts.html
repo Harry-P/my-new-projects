@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Basics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #764ba2;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+        }
+        #output {
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-radius: 5px;
+            margin-top: 20px;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>⚡ JavaScript Basics - Your First Interactive Code!</h1>
+
+    <!-- 
+    ====================================
+    EXERCISE 1: Alerts & Console 🔔
+    ====================================
+    Follow the TODO items in the <script> section below!
+    ====================================
+    -->
+
+    <div class="container">
+        <h2>Part 1: Alert Messages</h2>
+        <p>Click the button to see an alert!</p>
+        <button onclick="showAlert()">Click Me for Alert!</button>
+    </div>
+
+    <div class="container">
+        <h2>Part 2: Console Messages</h2>
+        <p>Open the Console (F12 → Console tab) and click the button!</p>
+        <button onclick="logToConsole()">Log to Console</button>
+    </div>
+
+    <div class="container">
+        <h2>Part 3: Changing Text</h2>
+        <p id="message">This text will change when you click the button!</p>
+        <button onclick="changeText()">Change Text</button>
+    </div>
+
+    <div class="container">
+        <h2>Part 4: Getting Input</h2>
+        <p>Type your name and click the button:</p>
+        <input type="text" id="nameInput" placeholder="Enter your name">
+        <button onclick="greetUser()">Greet Me!</button>
+        <div id="greeting"></div>
+    </div>
+
+    <div class="container">
+        <h2>Part 5: Math with JavaScript</h2>
+        <p>Let's do some math!</p>
+        <button onclick="doMath()">Calculate 5 + 3</button>
+        <div id="mathResult"></div>
+    </div>
+
+    <div class="container">
+        <h2>Part 6: Fun Counter</h2>
+        <p>Click count: <span id="counter">0</span></p>
+        <button onclick="increaseCounter()">Click Me!</button>
+        <button onclick="resetCounter()">Reset</button>
+    </div>
+
+    <div class="container">
+        <h2>Output Area</h2>
+        <div id="output">Results will appear here...</div>
+    </div>
+
+    <script>
+        /* 
+        ====================================
+        JAVASCRIPT CODE AREA 💻
+        ====================================
+        
+        Complete the functions below!
+        Test each one by clicking its button.
+        
+        ====================================
+        */
+
+        // TODO #1: Complete the showAlert function
+        function showAlert() {
+            // Use: alert("Your message here");
+            // Example: alert("Hello World!");
+            
+            // Your code here:
+            
+        }
+
+        // TODO #2: Complete the logToConsole function
+        function logToConsole() {
+            // Use: console.log("Your message");
+            // This prints to the browser console (F12)
+            
+            // Your code here:
+            
+        }
+
+        // TODO #3: Complete the changeText function
+        function changeText() {
+            // Get the element by ID: document.getElementById("message")
+            // Change its text: element.innerHTML = "New text";
+            
+            // Your code here:
+            
+        }
+
+        // TODO #4: Complete the greetUser function
+        function greetUser() {
+            // 1. Get the input value:
+            //    let name = document.getElementById("nameInput").value;
+            // 2. Create greeting message:
+            //    let greeting = "Hello " + name + "!";
+            // 3. Display it:
+            //    document.getElementById("greeting").innerHTML = greeting;
+            
+            // Your code here:
+            
+            
+            
+        }
+
+        // TODO #5: Complete the doMath function
+        function doMath() {
+            // 1. Create variables: let a = 5; let b = 3;
+            // 2. Calculate: let result = a + b;
+            // 3. Display: document.getElementById("mathResult").innerHTML = result;
+            
+            // Your code here:
+            
+            
+            
+        }
+
+        // TODO #6: Create a counter
+        let clickCount = 0; // This is already done for you!
+
+        function increaseCounter() {
+            // 1. Increase clickCount by 1: clickCount = clickCount + 1;
+            //    (or use: clickCount++;)
+            // 2. Display it: document.getElementById("counter").innerHTML = clickCount;
+            
+            // Your code here:
+            
+            
+        }
+
+        function resetCounter() {
+            // 1. Set clickCount back to 0
+            // 2. Update the display
+            
+            // Your code here:
+            
+            
+        }
+
+        /* 
+        ====================================
+        BONUS CHALLENGES! 🏆
+        ====================================
+        
+        If you finish early, try these:
+        
+        1. Create a button that changes the page background color
+        2. Make a button that shows the current time
+        3. Create an age calculator (ask for birth year)
+        4. Make a button that tells a random joke
+        5. Create a "mood checker" that responds to user input
+        
+        Example for background color:
+        
+        function changeBackground() {
+            document.body.style.backgroundColor = "lightblue";
+        }
+        
+        ====================================
+        */
+
+        // Write your bonus code here:
+        
+        
+        
+        
+        /* 
+        ====================================
+        JAVASCRIPT BASICS CHEAT SHEET:
+        ====================================
+        
+        Variables:
+        let name = "John";
+        let age = 15;
+        let isStudent = true;
+        
+        Getting Elements:
+        document.getElementById("myId")
+        document.querySelector(".myClass")
+        
+        Changing Content:
+        element.innerHTML = "New text";
+        element.textContent = "New text";
+        
+        Getting Input:
+        let value = element.value;
+        
+        Changing Styles:
+        element.style.color = "red";
+        element.style.fontSize = "20px";
+        
+        Math:
+        let sum = 5 + 3;        // Addition
+        let diff = 10 - 4;      // Subtraction
+        let product = 6 * 7;    // Multiplication
+        let quotient = 20 / 5;  // Division
+        
+        Strings (Text):
+        let greeting = "Hello " + name;
+        let message = `Hello ${name}!`;  // Template literal
+        
+        Console:
+        console.log("Message");
+        console.log(variable);
+        
+        Alerts & Prompts:
+        alert("Message");
+        let answer = prompt("Question?");
+        let confirmed = confirm("Are you sure?");
+        
+        ====================================
+        CONGRATULATIONS! 🎉
+        ====================================
+        
+        You learned:
+        ✅ Variables and functions
+        ✅ Getting user input
+        ✅ Changing HTML with JavaScript
+        ✅ Basic math operations
+        ✅ Console logging
+        ✅ Event handling with onclick
+        
+        Next: Try exercise2-calculator.html
+        ====================================
+        */
+
+    </script>
+
+</body>
+</html>
