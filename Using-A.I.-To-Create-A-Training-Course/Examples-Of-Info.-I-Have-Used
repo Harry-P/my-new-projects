@@ -1,0 +1,105 @@
+
+
+When you ask Claude to create a course, refer to (VS-Code-Learning-version-3) stored on github.
+If what it creates is not to your liking, then use the following bits and pieces to help you find
+to improve it. If the first version works, and you do want to make changes, make a branch in 
+github before making change, so if things get screwed up, you can go back to the original working
+model.
+
+
+
+Instructions I have given Clalude Sonnet 4.5 in the past to create a course to my liking:
+
+Create a interactive lesson series, with block diagrams & other visual aids, and assume I
+am in the 9th grade, a non coder, purpose is to learn to use VS Code
+
+Practice Files - Actual HTML/CSS/JS files to edit
+Exercise Templates - Files with TODO comments
+Challenge Files - Progressive difficulty exercises
+Answer Keys - So you can check your work
+
+The lessons ARE interactive and complete! They have:
+
+✅ Activities with step-by-step instructions
+✅ Practice exercises
+✅ Quizzes
+✅ Hands-on tasks
+✅ Visual diagrams
+✅ Homework
+
+actual interactive practice files that students can open, edit, and run!
+
+
+Desired structure
+
+A. Educational material
+B. Multiple choice quiz
+C. Auto-checking answers
+D. Interactive activities (only if quiz passed)
+E. Real-time feedback popups
+
+
+Part A: Learning material about VS Code with colorful examples and diagrams
+Part B: 5-question quiz with clickable options
+Part C: Automatic answer checking with JavaScript (need 100% to pass)
+Part D: Interactive activities with 13 checkboxes (unlocked after quiz)
+Part E: Popup feedback messages for guidance
+
+
+first setup Lesson01 so I can run it before you create anymore lessons
+
+when student the index.html, the lesson must come up in the Simple Browser window
+
+
+┌─────────────────────────────────────────────────────────┐
+│       Top Menu Bar (File, Edit, View, Help)            │
+├──────┬──────────┬──────────────────────┬───────────────┤
+│      │          │                      │               │
+│ Acti │  Side    │   Editor Area        │  Secondary    │
+│ vity │  Bar     │   (where you type    │  Side Bar     │
+│ Bar  │ (Files,  │    your code)        │  (Copilot,    │
+│      │ Search)  │                      │   Chat)       │
+│      │          │                      │               │
+├──────┴──────────┴──────────────────────┴───────────────┤
+│         Status Bar (bottom information)                │
+└─────────────────────────────────────────────────────────┘
+Need to make sure Claude includes terminal under editor area and right side bar containing copilot
+
+Activity Bar (Far Left) - Icons to switch views
+Side Bar (Left) - Shows files, search, etc.
+Editor Area (Center) - Where you code
+Secondary Side Bar (Right) - Copilot Chat, extra tools
+Status Bar (Bottom) - File info, errors
+
+
+
+┌─────────────────────────────────────────────────────────┐
+│       Top Menu Bar (File, Edit, View, Help)            │
+├──────┬──────────┬──────────────────────┬───────────────┤
+│      │          │                      │               │
+│ Acti │  Side    │   Editor Area        │  Secondary    │
+│ vity │  Bar     │   (where you type    │  Side Bar     │
+│ Bar  │ (Files,  │    your code)        │  (Copilot,    │
+│      │ Search)  │                      │   Chat)       │
+│      │          ├──────────────────────┤               │
+│      │          │  Panel (Terminal,    │               │
+│      │          │  Output, Problems)   │               │
+├──────┴──────────┴──────────────────────┴───────────────┤
+│         Status Bar (bottom information)                │
+└─────────────────────────────────────────────────────────┘
+This is exactly what I want
+
+
+Now explains all 6 panels:
+
+Activity Bar (Far Left) - Icons to switch views
+Side Bar (Left) - Files, search, extensions
+Editor Area (Center Top) - Where you code
+Panel (Center Bottom) - Terminal, Output, Problems, Debug Console
+Secondary Side Bar (Right) - Copilot Chat, extra tools
+Status Bar (Very Bottom) - File info, errors, language
+Updated Activities (18 total) now include:
+
+Finding the Panel
+Toggling the Panel on/off with View → Terminal or Ctrl+`
+Refresh your browser to see the complete layout! 🚀
