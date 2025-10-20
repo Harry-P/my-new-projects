@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 05: Styling with CSS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; display: none; }
+        .section.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .section h2 { color: #fa709a; font-size: 2rem; margin-bottom: 20px; }
+        .section h3 { color: #fee140; font-size: 1.5rem; margin: 20px 0 10px 0; }
+        .section p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 15px; color: #333; }
+        .section ul { margin-left: 30px; margin-bottom: 15px; }
+        .section li { margin: 8px 0; font-size: 1.1rem; }
+        .example-box { background: #f8f9fa; border-left: 4px solid #fa709a; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .code-box { background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 10px; margin: 20px 0; font-family: 'Courier New', monospace; overflow-x: auto; }
+        .live-preview { background: white; border: 3px solid #fa709a; padding: 20px; margin: 20px 0; border-radius: 10px; }
+        .quiz-question { background: #f8f9fa; padding: 25px; margin: 20px 0; border-radius: 10px; border: 2px solid #e0e0e0; }
+        .quiz-question h4 { color: #fa709a; font-size: 1.2rem; margin-bottom: 15px; }
+        .quiz-options { list-style: none; padding: 0; }
+        .quiz-options li { padding: 15px; margin: 10px 0; background: white; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+        .quiz-options li:hover { background: #f0f0f0; border-color: #fa709a; transform: translateX(5px); }
+        .quiz-options li.selected { background: #fff0f3; border-color: #fa709a; }
+        .quiz-options li.correct { background: #d4edda; border-color: #28a745; }
+        .quiz-options li.incorrect { background: #f8d7da; border-color: #dc3545; }
+        .btn { padding: 15px 40px; font-size: 1.1rem; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; font-weight: bold; margin: 10px 5px; }
+        .btn-primary { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(250, 112, 154, 0.3); }
+        .btn-secondary { background: #6c757d; color: white; }
+        .progress-bar { width: 100%; height: 10px; background: #e0e0e0; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #fa709a 0%, #fee140 100%); width: 0%; transition: width 0.5s; }
+        .score-display { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; font-size: 1.3rem; margin: 20px 0; }
+        .activity-box { background: #fce4ec; border: 2px solid #e91e63; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .activity-box h4 { color: #c2185b; margin-bottom: 15px; }
+        .checkboxlist { list-style: none; padding: 0; }
+        .checkboxlist li { padding: 10px; margin: 5px 0; background: white; border-radius: 5px; }
+        .checkboxlist input[type="checkbox"] { margin-right: 10px; transform: scale(1.3); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; padding: 40px; border-radius: 20px; max-width: 500px; text-align: center; animation: slideDown 0.3s; }
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-content h3 { color: #fa709a; margin-bottom: 15px; font-size: 1.8rem; }
+        .modal-content p { font-size: 1.1rem; margin-bottom: 20px; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e0e0e0; }
+        .locked { opacity: 0.5; pointer-events: none; }
+        .css-demo { padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .demo1 { background: #ff6b6b; color: white; font-size: 18px; }
+        .demo2 { background: #4ecdc4; color: white; font-family: 'Courier New', monospace; }
+        .demo3 { background: #ffe66d; color: #333; border: 3px dashed #ff6b6b; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Lesson 05: Styling with CSS</h1>
+            <p>Time: 25-30 minutes | Difficulty: Medium ⭐⭐⭐</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            
+            <!-- A. LEARNING MATERIAL -->
+            <div id="materialSection" class="section active">
+                <h2>📖 Part A: Learning Material</h2>
+                
+                <h3>What You'll Learn Today</h3>
+                <ul>
+                    <li>✅ What CSS is and why it's important</li>
+                    <li>✅ How to add CSS to your HTML</li>
+                    <li>✅ CSS properties: colors, fonts, sizes</li>
+                    <li>✅ Making your webpage beautiful!</li>
+                </ul>
+
+                <h3>🎨 What is CSS?</h3>
+                <div class="example-box">
+                    <p><strong>CSS = Cascading Style Sheets</strong></p>
+                    <p>🏠 Remember: HTML is the structure of a house<br>
+                    🎨 CSS is the paint, wallpaper, and decorations!<br>
+                    ✨ CSS makes websites look AWESOME!</p>
+                </div>
+
+                <h3>CSS Syntax (How to Write It):</h3>
+                <div class="code-box">
+selector {<br>
+&nbsp;&nbsp;property: value;<br>
+&nbsp;&nbsp;another-property: value;<br>
+}<br><br>
+
+<strong>Example:</strong><br>
+h1 {<br>
+&nbsp;&nbsp;color: blue;<br>
+&nbsp;&nbsp;font-size: 36px;<br>
+}
+                </div>
+
+                <h3>3 Ways to Add CSS:</h3>
+                <div class="example-box">
+                    <p><strong>1. Inline CSS</strong> (inside HTML tag):</p>
+                    <p style="margin-left: 20px;">&lt;h1 style="color: red;"&gt;Title&lt;/h1&gt;</p>
+                    
+                    <p><strong>2. Internal CSS</strong> (in &lt;head&gt; section):</p>
+                    <div class="code-box">
+&lt;head&gt;<br>
+&nbsp;&nbsp;&lt;style&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h1 { color: red; }<br>
+&nbsp;&nbsp;&lt;/style&gt;<br>
+&lt;/head&gt;
+                    </div>
+                    
+                    <p><strong>3. External CSS</strong> (separate .css file) ⭐ BEST WAY!</p>
+                    <div class="code-box">
+&lt;head&gt;<br>
+&nbsp;&nbsp;&lt;link rel="stylesheet" href="style.css"&gt;<br>
+&lt;/head&gt;
+                    </div>
+                </div>
+
+                <h3>Essential CSS Properties:</h3>
+                <div class="code-box">
+<strong>Colors:</strong><br>
+color: red;              /* text color */<br>
+background-color: blue;  /* background */<br><br>
+
+<strong>Text:</strong><br>
+font-size: 20px;<br>
+font-family: Arial;<br>
+font-weight: bold;<br>
+text-align: center;<br><br>
+
+<strong>Spacing:</strong><br>
+margin: 20px;    /* space outside */<br>
+padding: 10px;   /* space inside */<br><br>
+
+<strong>Borders:</strong><br>
+border: 2px solid black;<br>
+border-radius: 10px;  /* rounded corners */
+                </div>
+
+                <h3>Colors in CSS:</h3>
+                <div class="example-box">
+                    <p><strong>3 Ways to Define Colors:</strong></p>
+                    <p>• <strong>Names:</strong> red, blue, green, yellow</p>
+                    <p>• <strong>Hex Codes:</strong> #FF0000, #00FF00, #0000FF</p>
+                    <p>• <strong>RGB:</strong> rgb(255, 0, 0)</p>
+                </div>
+
+                <h3>Live CSS Examples:</h3>
+                <div class="live-preview">
+                    <div class="css-demo demo1">This box has a red background and white text!</div>
+                    <div class="css-demo demo2">This box uses a different font and color!</div>
+                    <div class="css-demo demo3">This box has a yellow background and dashed border!</div>
+                </div>
+
+                <h3>Box Model Concept:</h3>
+                <div class="code-box">
+┌─────────────────────────────────┐<br>
+│         MARGIN (outside)        │<br>
+│  ┌─────────────────────────┐   │<br>
+│  │  BORDER                 │   │<br>
+│  │  ┌───────────────────┐  │   │<br>
+│  │  │  PADDING          │  │   │<br>
+│  │  │  ┌─────────────┐  │  │   │<br>
+│  │  │  │   CONTENT   │  │  │   │<br>
+│  │  │  └─────────────┘  │  │   │<br>
+│  │  └───────────────────┘  │   │<br>
+│  └─────────────────────────┘   │<br>
+└─────────────────────────────────┘
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="goBack()">⬅️ Back to Home</button>
+                    <button class="btn btn-primary" onclick="showQuiz()">Continue to Quiz ➡️</button>
+                </div>
+            </div>
+
+            <!-- B. QUIZ SECTION -->
+            <div id="quizSection" class="section">
+                <h2>🎯 Part B: Test Your Knowledge</h2>
+                <p>Answer all questions correctly to unlock the styling activities!</p>
+
+                <div class="quiz-question">
+                    <h4>Question 1: What does CSS stand for?</h4>
+                    <ul class="quiz-options" id="q1Options">
+                        <li onclick="selectAnswer(1, 'a')">A) Cascading Style Sheets ✅</li>
+                        <li onclick="selectAnswer(1, 'b')">B) Computer Style System</li>
+                        <li onclick="selectAnswer(1, 'c')">C) Creative Style Syntax</li>
+                        <li onclick="selectAnswer(1, 'd')">D) Colorful Style Sheets</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2: Which property changes text color?</h4>
+                    <ul class="quiz-options" id="q2Options">
+                        <li onclick="selectAnswer(2, 'a')">A) text-color</li>
+                        <li onclick="selectAnswer(2, 'b')">B) font-color</li>
+                        <li onclick="selectAnswer(2, 'c')">C) color ✅</li>
+                        <li onclick="selectAnswer(2, 'd')">D) text-style</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3: What's the BEST way to add CSS to a webpage?</h4>
+                    <ul class="quiz-options" id="q3Options">
+                        <li onclick="selectAnswer(3, 'a')">A) Inline CSS</li>
+                        <li onclick="selectAnswer(3, 'b')">B) Internal CSS</li>
+                        <li onclick="selectAnswer(3, 'c')">C) External CSS file ✅</li>
+                        <li onclick="selectAnswer(3, 'd')">D) Don't use CSS</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 4: Which property adds space INSIDE an element?</h4>
+                    <ul class="quiz-options" id="q4Options">
+                        <li onclick="selectAnswer(4, 'a')">A) margin</li>
+                        <li onclick="selectAnswer(4, 'b')">B) padding ✅</li>
+                        <li onclick="selectAnswer(4, 'c')">C) border</li>
+                        <li onclick="selectAnswer(4, 'd')">D) spacing</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 5: What does border-radius do?</h4>
+                    <ul class="quiz-options" id="q5Options">
+                        <li onclick="selectAnswer(5, 'a')">A) Makes borders thicker</li>
+                        <li onclick="selectAnswer(5, 'b')">B) Changes border color</li>
+                        <li onclick="selectAnswer(5, 'c')">C) Makes corners rounded ✅</li>
+                        <li onclick="selectAnswer(5, 'd')">D) Removes borders</li>
+                    </ul>
+                </div>
+
+                <div class="score-display" id="scoreDisplay" style="display: none;">
+                    Your Score: <span id="scoreText">0/5</span>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="showMaterial()">⬅️ Back to Material</button>
+                    <button class="btn btn-primary" onclick="checkQuiz()">Check Answers 📝</button>
+                </div>
+            </div>
+
+            <!-- D & E. ACTIVITIES SECTION -->
+            <div id="activitiesSection" class="section locked">
+                <h2>🎮 Part D: Interactive Activities</h2>
+                <p>Perfect! Now let's style your webpage with CSS!</p>
+
+                <div class="activity-box">
+                    <h4>✅ Activity 1: Create a CSS File</h4>
+                    <p>Create a file named <strong>style.css</strong> and link it to your HTML:</p>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Created style.css file</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Added &lt;link&gt; tag in HTML &lt;head&gt;</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Saved both files</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h4>✅ Activity 2: Style Your Webpage</h4>
+                    <p>Add these styles to your style.css:</p>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Changed body background-color</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Changed h1 color and font-size</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Styled paragraphs (color, line-height)</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Added padding and margin to elements</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Added a border to something</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h4>✅ Activity 3: Experiment with Styles!</h4>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Tried at least 3 different colors</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Changed font-family to different fonts</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Used border-radius for rounded corners</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Made webpage look beautiful!</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Refreshed browser to see all changes</li>
+                    </ul>
+                </div>
+
+                <div class="score-display">
+                    Activities Completed: <span id="activityCount">0</span>/13
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="showQuiz()">⬅️ Back to Quiz</button>
+                    <button class="btn btn-primary" onclick="completeLesson()">Complete Lesson 🎉</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FEEDBACK MODAL -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div id="modalIcon"></div>
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button class="btn btn-primary" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        let answers = { 1: null, 2: null, 3: null, 4: null, 5: null };
+        const correctAnswers = { 1: 'a', 2: 'c', 3: 'c', 4: 'b', 5: 'c' };
+        let quizPassed = false;
+
+        function updateProgress(percentage) {
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        function showMaterial() {
+            hideAllSections();
+            document.getElementById('materialSection').classList.add('active');
+            updateProgress(33);
+        }
+
+        function showQuiz() {
+            hideAllSections();
+            document.getElementById('quizSection').classList.add('active');
+            updateProgress(66);
+        }
+
+        function showActivities() {
+            if (!quizPassed) {
+                showModal('error', 'Quiz Not Passed', 'You need to pass the quiz first! Make sure all answers are correct.');
+                return;
+            }
+            hideAllSections();
+            document.getElementById('activitiesSection').classList.remove('locked');
+            document.getElementById('activitiesSection').classList.add('active');
+            updateProgress(100);
+        }
+
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+        }
+
+        function selectAnswer(question, answer) {
+            document.querySelectorAll(`#q${question}Options li`).forEach(li => {
+                li.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            answers[question] = answer;
+        }
+
+        function checkQuiz() {
+            if (Object.values(answers).includes(null)) {
+                showModal('error', 'Incomplete Quiz', 'Please answer all questions before checking!');
+                return;
+            }
+
+            let score = 0;
+            let allCorrect = true;
+
+            for (let q = 1; q <= 5; q++) {
+                const options = document.querySelectorAll(`#q${q}Options li`);
+                const userAnswer = answers[q];
+                const correctAnswer = correctAnswers[q];
+
+                options.forEach((li, index) => {
+                    const answerLetter = String.fromCharCode(97 + index);
+                    li.classList.remove('correct', 'incorrect');
+                    
+                    if (answerLetter === correctAnswer) {
+                        li.classList.add('correct');
+                    }
+                    
+                    if (answerLetter === userAnswer && userAnswer !== correctAnswer) {
+                        li.classList.add('incorrect');
+                        allCorrect = false;
+                    }
+                });
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                }
+            }
+
+            document.getElementById('scoreText').textContent = `${score}/5`;
+            document.getElementById('scoreDisplay').style.display = 'block';
+
+            if (allCorrect) {
+                quizPassed = true;
+                showModal('success', 'Perfect Score! 🎉', `Congratulations! You got all ${score} questions correct! The activities are now unlocked.`);
+                setTimeout(showActivities, 2000);
+            } else {
+                showModal('error', 'Not Quite There', `You got ${score}/5 correct. Review the material and try again! You need all correct to unlock activities.`);
+            }
+        }
+
+        // Activity checking with verification
+        let activityGroupsCompleted = {
+            group1: false,
+            group2: false,
+            group3: false
+        };
+
+        function checkActivity(checkbox) {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            document.getElementById('activityCount').textContent = checkedBoxes;
+
+            // Check if all checkboxes in the current activity box are completed
+            if (checkbox.checked) {
+                const activityBox = checkbox.closest('.activity-box');
+                const boxCheckboxes = activityBox.querySelectorAll('input[type="checkbox"]');
+                const boxCheckedCount = activityBox.querySelectorAll('input[type="checkbox"]:checked').length;
+                
+                // Show popup only when all checkboxes in this activity box are completed
+                if (boxCheckedCount === boxCheckboxes.length) {
+                    // Determine which activity group this is
+                    const activityBoxes = document.querySelectorAll('.activity-box');
+                    const groupIndex = Array.from(activityBoxes).indexOf(activityBox);
+                    const groupKey = `group${groupIndex + 1}`;
+                    
+                    if (!activityGroupsCompleted[groupKey]) {
+                        activityGroupsCompleted[groupKey] = true;
+                        showModal('success', 'Activity Group Complete! 🎉', 
+                            `Great job! Make sure you actually completed these tasks in VS Code before moving on!`);
+                    }
+                }
+            }
+        }
+
+        function showModal(type, title, message) {
+            const modal = document.getElementById('modal');
+            const icon = document.getElementById('modalIcon');
+            const titleEl = document.getElementById('modalTitle');
+            const messageEl = document.getElementById('modalMessage');
+
+            if (type === 'success') {
+                icon.innerHTML = '<div style="font-size: 4rem; margin-bottom: 20px;">✅</div>';
+                icon.style.color = '#28a745';
+            } else {
+                icon.innerHTML = '<div style="font-size: 4rem; margin-bottom: 20px;">❌</div>';
+                icon.style.color = '#dc3545';
+            }
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function completeLesson() {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            
+            if (checkedBoxes < 13) {
+                showModal('error', 'Activities Incomplete', 'Please complete ALL activities before finishing the lesson!');
+                return;
+            }
+
+            // Verify all activity groups are completed
+            const allGroupsComplete = activityGroupsCompleted.group1 && 
+                                     activityGroupsCompleted.group2 && 
+                                     activityGroupsCompleted.group3;
+            
+            if (!allGroupsComplete) {
+                showModal('error', 'Not All Activities Verified', 
+                    'Please make sure you complete each activity GROUP (all checkboxes in each section) before finishing!');
+                return;
+            }
+
+            // Final confirmation
+            const confirmed = confirm(
+                '⚠️ IMPORTANT VERIFICATION ⚠️\n\n' +
+                'Did you ACTUALLY complete these activities in VS Code?\n\n' +
+                '✅ Created a CSS file and linked it to HTML?\n' +
+                '✅ Applied colors, fonts, and styling?\n' +
+                '✅ Used the CSS box model in your design?\n\n' +
+                'Click OK only if you truly completed these tasks.\n' +
+                'Click Cancel to go back and finish them.'
+            );
+
+            if (!confirmed) {
+                showModal('error', 'Go Complete the Activities', 
+                    'Please actually complete the activities in VS Code. Learning by doing is important!');
+                return;
+            }
+
+            showModal('success', 'Lesson Complete! 🏆', 
+                'Congratulations! You completed Lesson 05 and verified your work. Ready for Lesson 06?');
+            
+            localStorage.setItem('lesson05Complete', 'true');
+            localStorage.setItem('lesson05Verified', 'true');
+            
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 3000);
+        }
+
+        function goBack() {
+            window.location.href = '../index.html';
+        }
+
+        updateProgress(33);
+    </script>
+
+</body>
+</html>

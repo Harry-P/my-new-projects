@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 08: Keyboard Shortcuts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #f093fb;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #f5576c;
+            font-size: 1.5rem;
+            margin: 20px 0 10px 0;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .example-box {
+            background: #fff5f7;
+            border-left: 4px solid #f093fb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .shortcut-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .shortcut-table th {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .shortcut-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .shortcut-table tr:hover {
+            background: #fff5f7;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .quiz-option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-option:hover {
+            border-color: #f093fb;
+            background: #fff5f7;
+        }
+
+        .quiz-option input[type="radio"] {
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+        .activity-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .activity-box h3 {
+            color: #f093fb;
+            margin-bottom: 15px;
+        }
+
+        .checkboxlist {
+            list-style: none;
+        }
+
+        .checkboxlist li {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkboxlist input[type="checkbox"] {
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .modal p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        ul {
+            margin-left: 30px;
+            line-height: 2;
+        }
+
+        kbd {
+            background: #f093fb;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>⌨️ Lesson 08: Keyboard Shortcuts</h1>
+            <p>Work Faster, Code Smarter!</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- A) MATERIAL SECTION -->
+            <section id="materialSection" class="section active">
+                <h2>📚 Why Shortcuts Matter</h2>
+                
+                <p>Imagine clicking <strong>File → Save</strong> every time you save a file. Now imagine pressing <kbd>Ctrl+S</kbd> instead. <strong>Way faster, right?</strong></p>
+
+                <div class="example-box">
+                    <h3>⚡ Speed Comparison</h3>
+                    <p><strong>WITH MOUSE:</strong> Click File → Click Save → Wait → 10 seconds</p>
+                    <p><strong>WITH SHORTCUTS:</strong> Press <kbd>Ctrl+S</kbd> → Done! → 1 second</p>
+                    <p style="margin-top: 15px; font-weight: 600; color: #f5576c;">Shortcuts = Faster coding = More time for fun! 🎮</p>
+                </div>
+
+                <h3>📚 Essential File Shortcuts</h3>
+                <table class="shortcut-table">
+                    <tr>
+                        <th>Action</th>
+                        <th>Windows/Linux</th>
+                        <th>What It Does</th>
+                    </tr>
+                    <tr>
+                        <td><strong>New File</strong></td>
+                        <td><kbd>Ctrl+N</kbd></td>
+                        <td>Create new file</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Save File</strong></td>
+                        <td><kbd>Ctrl+S</kbd></td>
+                        <td>Save current file</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Open File</strong></td>
+                        <td><kbd>Ctrl+O</kbd></td>
+                        <td>Open a file</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Close File</strong></td>
+                        <td><kbd>Ctrl+W</kbd></td>
+                        <td>Close current tab</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Save All</strong></td>
+                        <td><kbd>Ctrl+K S</kbd></td>
+                        <td>Save all open files</td>
+                    </tr>
+                </table>
+
+                <h3>✏️ Essential Editing Shortcuts</h3>
+                <table class="shortcut-table">
+                    <tr>
+                        <th>Action</th>
+                        <th>Windows/Linux</th>
+                        <th>What It Does</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Copy</strong></td>
+                        <td><kbd>Ctrl+C</kbd></td>
+                        <td>Copy selection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cut</strong></td>
+                        <td><kbd>Ctrl+X</kbd></td>
+                        <td>Cut selection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Paste</strong></td>
+                        <td><kbd>Ctrl+V</kbd></td>
+                        <td>Paste</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Undo</strong></td>
+                        <td><kbd>Ctrl+Z</kbd></td>
+                        <td>Undo last action</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Redo</strong></td>
+                        <td><kbd>Ctrl+Y</kbd></td>
+                        <td>Redo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Select All</strong></td>
+                        <td><kbd>Ctrl+A</kbd></td>
+                        <td>Select everything</td>
+                    </tr>
+                </table>
+
+                <h3>🎯 Line Operation Shortcuts</h3>
+                <table class="shortcut-table">
+                    <tr>
+                        <th>Action</th>
+                        <th>Windows/Linux</th>
+                        <th>What It Does</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Delete Line</strong></td>
+                        <td><kbd>Ctrl+Shift+K</kbd></td>
+                        <td>Delete entire line</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Copy Line Down</strong></td>
+                        <td><kbd>Shift+Alt+↓</kbd></td>
+                        <td>Duplicate line below</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Move Line Up</strong></td>
+                        <td><kbd>Alt+↑</kbd></td>
+                        <td>Move line up</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Move Line Down</strong></td>
+                        <td><kbd>Alt+↓</kbd></td>
+                        <td>Move line down</td>
+                    </tr>
+                </table>
+
+                <h3>🚀 Navigation Shortcuts</h3>
+                <table class="shortcut-table">
+                    <tr>
+                        <th>Action</th>
+                        <th>Windows/Linux</th>
+                        <th>What It Does</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Find</strong></td>
+                        <td><kbd>Ctrl+F</kbd></td>
+                        <td>Search in file</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Replace</strong></td>
+                        <td><kbd>Ctrl+H</kbd></td>
+                        <td>Find and replace</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Go to Line</strong></td>
+                        <td><kbd>Ctrl+G</kbd></td>
+                        <td>Jump to line number</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quick Open</strong></td>
+                        <td><kbd>Ctrl+P</kbd></td>
+                        <td>Quick file search</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Command Palette</strong></td>
+                        <td><kbd>Ctrl+Shift+P</kbd></td>
+                        <td>Access all commands</td>
+                    </tr>
+                </table>
+
+                <h3>💡 Pro Shortcuts</h3>
+                <table class="shortcut-table">
+                    <tr>
+                        <th>Action</th>
+                        <th>Windows/Linux</th>
+                        <th>What It Does</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Comment Line</strong></td>
+                        <td><kbd>Ctrl+/</kbd></td>
+                        <td>Add/remove comment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Format Document</strong></td>
+                        <td><kbd>Shift+Alt+F</kbd></td>
+                        <td>Auto-format code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Toggle Sidebar</strong></td>
+                        <td><kbd>Ctrl+B</kbd></td>
+                        <td>Show/hide sidebar</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Toggle Terminal</strong></td>
+                        <td><kbd>Ctrl+`</kbd></td>
+                        <td>Show/hide terminal</td>
+                    </tr>
+                </table>
+
+                <div class="example-box">
+                    <h3>💪 Practice Makes Perfect!</h3>
+                    <p>Don't try to memorize all shortcuts at once. Start with these 5:</p>
+                    <ol style="margin-left: 20px; line-height: 2;">
+                        <li><kbd>Ctrl+S</kbd> - Save (use this CONSTANTLY!)</li>
+                        <li><kbd>Ctrl+Z</kbd> - Undo (lifesaver!)</li>
+                        <li><kbd>Ctrl+C</kbd> / <kbd>Ctrl+V</kbd> - Copy/Paste</li>
+                        <li><kbd>Ctrl+F</kbd> - Find text</li>
+                        <li><kbd>Ctrl+/</kbd> - Comment code</li>
+                    </ol>
+                    <p style="margin-top: 15px;">Once these become automatic, learn more shortcuts!</p>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-primary" onclick="showQuiz()">Take the Quiz! 📝</button>
+                </div>
+            </section>
+
+            <!-- B) QUIZ SECTION -->
+            <section id="quizSection" class="section">
+                <h2>📝 Quiz Time!</h2>
+                <p>Answer all questions correctly to unlock the activities!</p>
+                <p style="margin-bottom: 30px;">Current Score: <strong><span id="quizScore">0</span>/5</strong></p>
+
+                <div class="activity-box">
+                    <h3>Question 1: What shortcut saves your file?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'b')">
+                        <input type="radio" name="q1" value="a"> 
+                        <span>A) Ctrl+F</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'b')">
+                        <input type="radio" name="q1" value="b">
+                        <span>B) Ctrl+S</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'b')">
+                        <input type="radio" name="q1" value="c">
+                        <span>C) Ctrl+W</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'b')">
+                        <input type="radio" name="q1" value="d">
+                        <span>D) Ctrl+X</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 2: How do you duplicate a line downward?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'c')">
+                        <input type="radio" name="q2" value="a">
+                        <span>A) Ctrl+C, Ctrl+V</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'c')">
+                        <input type="radio" name="q2" value="b">
+                        <span>B) Ctrl+D</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'c')">
+                        <input type="radio" name="q2" value="c">
+                        <span>C) Shift+Alt+↓</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'c')">
+                        <input type="radio" name="q2" value="d">
+                        <span>D) Alt+C</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 3: What does Ctrl+/ do?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="a">
+                        <span>A) Delete line</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="b">
+                        <span>B) Save file</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="c">
+                        <span>C) Add/remove comment</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="d">
+                        <span>D) Find text</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 4: Which shortcut opens the Command Palette?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'a')">
+                        <input type="radio" name="q4" value="a">
+                        <span>A) Ctrl+Shift+P</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'a')">
+                        <input type="radio" name="q4" value="b">
+                        <span>B) Ctrl+P</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'a')">
+                        <input type="radio" name="q4" value="c">
+                        <span>C) Ctrl+K</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'a')">
+                        <input type="radio" name="q4" value="d">
+                        <span>D) Ctrl+H</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 5: What does Ctrl+Z do?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="a">
+                        <span>A) Saves file</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="b">
+                        <span>B) Undoes last action</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="c">
+                        <span>C) Closes file</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="d">
+                        <span>D) Copies text</span>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" onclick="showMaterial()">← Back to Material</button>
+                    <button class="btn-primary" onclick="checkQuiz()">Check Answers</button>
+                </div>
+            </section>
+
+            <!-- D) ACTIVITIES SECTION -->
+            <section id="activitiesSection" class="section">
+                <h2>🎯 Practice Activities</h2>
+                <p>Complete ALL activities in VS Code to master keyboard shortcuts! (<span id="activityCount">0</span>/14 completed)</p>
+
+                <div class="activity-box">
+                    <h3>⌨️ Activity 1: Master File Shortcuts</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Press <kbd>Ctrl+N</kbd> to create a new file</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Type: "Practicing shortcuts!" and press <kbd>Ctrl+S</kbd> to save</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Name it "shortcuts-practice.txt"</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Press <kbd>Ctrl+W</kbd> to close the file</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Press <kbd>Ctrl+O</kbd> to reopen it</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>✏️ Activity 2: Practice Line Operations</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Type 3 lines of text (any text)</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Use <kbd>Shift+Alt+↓</kbd> to duplicate the second line</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Use <kbd>Alt+↑</kbd> to move a line up</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Use <kbd>Ctrl+Shift+K</kbd> to delete a line</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>🚀 Activity 3: Speed Challenge</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Use <kbd>Ctrl+F</kbd> to search for a word in your file</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Use <kbd>Ctrl+A</kbd> to select all text</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Use <kbd>Ctrl+C</kbd> to copy and <kbd>Ctrl+V</kbd> to paste</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Use <kbd>Ctrl+Z</kbd> to undo, then <kbd>Ctrl+Y</kbd> to redo</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Use <kbd>Ctrl+/</kbd> to comment/uncomment a line</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" onclick="showQuiz()">← Back to Quiz</button>
+                    <button class="btn-primary" onclick="completeLesson()">Complete Lesson! 🎉</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for feedback -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div id="modalIcon" class="modal-icon"></div>
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button class="btn-primary" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            '1': 'b',
+            '2': 'c',
+            '3': 'c',
+            '4': 'a',
+            '5': 'b'
+        };
+
+        let selectedAnswers = {};
+
+        function updateProgress(percentage) {
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        function showMaterial() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('materialSection').classList.add('active');
+            updateProgress(0);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function showQuiz() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('quizSection').classList.add('active');
+            updateProgress(33);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function showActivities() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('activitiesSection').classList.add('active');
+            updateProgress(66);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function selectAnswer(element, questionNum, correctAnswer) {
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            const allOptions = element.parentElement.querySelectorAll('.quiz-option');
+            allOptions.forEach(opt => {
+                opt.style.background = '#f8f9fa';
+                opt.style.borderColor = '#e0e0e0';
+            });
+            
+            element.style.background = '#fff5f7';
+            element.style.borderColor = '#f093fb';
+            
+            selectedAnswers[questionNum] = radio.value;
+        }
+
+        function checkQuiz() {
+            let score = 0;
+            
+            for (let q in correctAnswers) {
+                if (selectedAnswers[q] === correctAnswers[q]) {
+                    score++;
+                }
+            }
+
+            document.getElementById('quizScore').textContent = score;
+
+            if (score === 5) {
+                showModal('success', 'Perfect Score! 🎉', 'You got all answers correct! Activities unlocked!');
+                setTimeout(() => {
+                    showActivities();
+                }, 2000);
+            } else {
+                showModal('error', 'Not Quite There', `You got ${score}/5 correct. Review the material and try again! You need all correct to unlock activities.`);
+            }
+        }
+
+        let activityGroupsCompleted = {
+            group1: false,
+            group2: false,
+            group3: false
+        };
+
+        function checkActivity(checkbox) {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            document.getElementById('activityCount').textContent = checkedBoxes;
+
+            if (checkbox.checked) {
+                const activityBox = checkbox.closest('.activity-box');
+                const boxCheckboxes = activityBox.querySelectorAll('input[type="checkbox"]');
+                const boxCheckedCount = activityBox.querySelectorAll('input[type="checkbox"]:checked').length;
+                
+                if (boxCheckedCount === boxCheckboxes.length) {
+                    const activityBoxes = document.querySelectorAll('.activity-box');
+                    const groupIndex = Array.from(activityBoxes).indexOf(activityBox);
+                    const groupKey = `group${groupIndex + 1}`;
+                    
+                    if (!activityGroupsCompleted[groupKey]) {
+                        activityGroupsCompleted[groupKey] = true;
+                        showModal('success', 'Activity Group Complete! 🎉', 
+                            `Great job! Make sure you actually used these shortcuts in VS Code!`);
+                    }
+                }
+            }
+        }
+
+        function showModal(type, title, message) {
+            const modal = document.getElementById('modal');
+            const icon = document.getElementById('modalIcon');
+            const titleEl = document.getElementById('modalTitle');
+            const messageEl = document.getElementById('modalMessage');
+
+            if (type === 'success') {
+                icon.innerHTML = '<div class="success-icon">✅</div>';
+                icon.style.color = '#28a745';
+            } else {
+                icon.innerHTML = '<div class="error-icon">❌</div>';
+                icon.style.color = '#dc3545';
+            }
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function completeLesson() {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            
+            if (checkedBoxes < 14) {
+                showModal('error', 'Activities Incomplete', 'Please complete ALL activities before finishing the lesson!');
+                return;
+            }
+
+            const allGroupsComplete = activityGroupsCompleted.group1 && 
+                                     activityGroupsCompleted.group2 && 
+                                     activityGroupsCompleted.group3;
+            
+            if (!allGroupsComplete) {
+                showModal('error', 'Not All Activities Verified', 
+                    'Please make sure you complete each activity GROUP (all checkboxes in each section) before finishing!');
+                return;
+            }
+
+            const confirmed = confirm(
+                '⚠️ IMPORTANT VERIFICATION ⚠️\n\n' +
+                'Did you ACTUALLY complete these activities in VS Code?\n\n' +
+                '✅ Practiced file shortcuts (Ctrl+N, Ctrl+S, Ctrl+W, Ctrl+O)?\n' +
+                '✅ Used line operations (move, duplicate, delete lines)?\n' +
+                '✅ Tried editing shortcuts (copy, paste, undo, comment)?\n\n' +
+                'Click OK only if you truly practiced these shortcuts.\n' +
+                'Click Cancel to go back and practice them.'
+            );
+
+            if (!confirmed) {
+                showModal('error', 'Go Practice the Shortcuts', 
+                    'Please actually practice the shortcuts in VS Code. Muscle memory comes from practice!');
+                return;
+            }
+
+            showModal('success', 'Lesson Complete! 🏆', 
+                'Congratulations! You completed Lesson 08 and verified your work. Ready for Lesson 09?');
+            
+            localStorage.setItem('lesson08Complete', 'true');
+            localStorage.setItem('lesson08Verified', 'true');
+            
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 3000);
+        }
+
+        function goBack() {
+            window.location.href = '../index.html';
+        }
+
+        updateProgress(0);
+    </script>
+
+</body>
+</html>

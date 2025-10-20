@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Code Learning - Version 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .progress-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideUp 0.8s;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar-container {
+            background: #e0e0e0;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .lesson-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.5s backwards;
+        }
+
+        .lesson-card:nth-child(1) { animation-delay: 0.1s; }
+        .lesson-card:nth-child(2) { animation-delay: 0.2s; }
+        .lesson-card:nth-child(3) { animation-delay: 0.3s; }
+        .lesson-card:nth-child(4) { animation-delay: 0.4s; }
+        .lesson-card:nth-child(5) { animation-delay: 0.5s; }
+        .lesson-card:nth-child(6) { animation-delay: 0.6s; }
+        .lesson-card:nth-child(7) { animation-delay: 0.7s; }
+        .lesson-card:nth-child(8) { animation-delay: 0.8s; }
+        .lesson-card:nth-child(9) { animation-delay: 0.9s; }
+        .lesson-card:nth-child(10) { animation-delay: 1s; }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .lesson-card.completed::before {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .lesson-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .lesson-card.completed .lesson-number {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .lesson-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .lesson-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .lesson-status {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.verified {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-badge.not-started {
+            background: #f8f9fa;
+            color: #6c757d;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+
+        .footer p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .instructions {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .instructions h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .instructions li {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .instructions li::before {
+            content: '✓ ';
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-right: 10px;
+        }
+
+        .completion-banner {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 3px solid #ffa500;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 165, 0, 0.3);
+            animation: pulse 2s infinite;
+            display: none;
+        }
+
+        .completion-banner.show {
+            display: block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .completion-banner h2 {
+            font-size: 3rem;
+            color: #19547b;
+            margin-bottom: 15px;
+        }
+
+        .completion-banner p {
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        .reset-button {
+            background: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .reset-button:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>🚀 VS Code Learning</h1>
+            <p>Master VS Code with Interactive Lessons</p>
+            <span class="version-badge">Version 2.0 - Quiz System</span>
+        </div>
+
+        <div id="completionBanner" class="completion-banner">
+            <h2>🏆 CONGRATULATIONS! 🏆</h2>
+            <p>You've completed all 10 lessons and built a real portfolio website!</p>
+            <p style="margin-top: 15px;">You are now a VS Code master! Keep building amazing projects! 🎉</p>
+        </div>
+
+        <div class="progress-section">
+            <h2>📊 Your Progress</h2>
+            <div class="progress-stats">
+                <div class="stat-card">
+                    <h3 id="completedCount">0</h3>
+                    <p>Lessons Completed</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="verifiedCount">0</h3>
+                    <p>Lessons Verified</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="percentageComplete">0%</h3>
+                    <p>Course Progress</p>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressBar">
+                    <span id="progressText">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h2>📚 How It Works</h2>
+            <ul>
+                <li>Each lesson has <strong>educational material</strong>, a <strong>quiz</strong>, and <strong>hands-on activities</strong></li>
+                <li>Answer all 5 quiz questions correctly to unlock the activities</li>
+                <li>Complete ALL activities in each section - the system tracks your progress</li>
+                <li>At the end, verify you actually completed the tasks (honesty system!)</li>
+                <li>Progress is saved automatically in your browser</li>
+            </ul>
+        </div>
+
+        <div class="progress-section">
+            <h2>🎓 Course Lessons</h2>
+            <div class="lessons-grid" id="lessonsGrid">
+                <!-- Lesson cards will be generated here -->
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="reset-button" onclick="resetProgress()">Reset All Progress</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>💡 Tip: Start with Lesson 01 and work your way through in order!</p>
+            <p style="margin-top: 10px;">Version 2.0 | Interactive Quiz-Based Learning System</p>
+        </div>
+    </div>
+
+    <script>
+        const lessons = [
+            {
+                number: 1,
+                title: "Introduction to VS Code",
+                description: "Learn about the VS Code interface, panels, and basic features to get started.",
+                folder: "Lesson01"
+            },
+            {
+                number: 2,
+                title: "Creating and Managing Files",
+                description: "Master file operations, naming conventions, and keyboard shortcuts for files.",
+                folder: "Lesson02"
+            },
+            {
+                number: 3,
+                title: "Customizing VS Code",
+                description: "Personalize your editor with themes, fonts, and settings to match your style.",
+                folder: "Lesson03"
+            },
+            {
+                number: 4,
+                title: "HTML Basics",
+                description: "Build your first webpage with HTML structure, tags, and elements.",
+                folder: "Lesson04"
+            },
+            {
+                number: 5,
+                title: "CSS Styling",
+                description: "Make your websites beautiful with colors, fonts, and CSS styling techniques.",
+                folder: "Lesson05"
+            },
+            {
+                number: 6,
+                title: "JavaScript Interactivity",
+                description: "Add interactive features with JavaScript, functions, and event handling.",
+                folder: "Lesson06"
+            },
+            {
+                number: 7,
+                title: "Project Organization",
+                description: "Structure your projects professionally with folders and file linking.",
+                folder: "Lesson07"
+            },
+            {
+                number: 8,
+                title: "Keyboard Shortcuts",
+                description: "Work faster with essential keyboard shortcuts and productivity tips.",
+                folder: "Lesson08"
+            },
+            {
+                number: 9,
+                title: "VS Code Extensions",
+                description: "Supercharge your editor with Live Server, Prettier, and other extensions.",
+                folder: "Lesson09"
+            },
+            {
+                number: 10,
+                title: "Final Project - Portfolio",
+                description: "Build a complete portfolio website using everything you've learned!",
+                folder: "Lesson10"
+            }
+        ];
+
+        function checkLessonStatus(lessonNum) {
+            const completed = localStorage.getItem(`lesson${lessonNum.toString().padStart(2, '0')}Complete`) === 'true';
+            const verified = localStorage.getItem(`lesson${lessonNum.toString().padStart(2, '0')}Verified`) === 'true';
+            return { completed, verified };
+        }
+
+        function renderLessons() {
+            const grid = document.getElementById('lessonsGrid');
+            let completedCount = 0;
+            let verifiedCount = 0;
+
+            lessons.forEach(lesson => {
+                const status = checkLessonStatus(lesson.number);
+                if (status.completed) completedCount++;
+                if (status.verified) verifiedCount++;
+
+                const card = document.createElement('div');
+                card.className = 'lesson-card' + (status.completed ? ' completed' : '');
+                card.onclick = () => window.location.href = `${lesson.folder}/index.html`;
+
+                const statusBadges = [];
+                if (status.completed) {
+                    statusBadges.push('<span class="status-badge completed">✅ Completed</span>');
+                }
+                if (status.verified) {
+                    statusBadges.push('<span class="status-badge verified">🔒 Verified</span>');
+                }
+                if (!status.completed) {
+                    statusBadges.push('<span class="status-badge not-started">⏳ Not Started</span>');
+                }
+
+                card.innerHTML = `
+                    <div class="lesson-number">${lesson.number}</div>
+                    <div class="lesson-title">${lesson.title}</div>
+                    <div class="lesson-description">${lesson.description}</div>
+                    <div class="lesson-status">
+                        ${statusBadges.join('')}
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            // Update stats
+            document.getElementById('completedCount').textContent = completedCount;
+            document.getElementById('verifiedCount').textContent = verifiedCount;
+            
+            const percentage = Math.round((completedCount / lessons.length) * 100);
+            document.getElementById('percentageComplete').textContent = percentage + '%';
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '%';
+
+            // Show completion banner if all lessons are complete
+            const courseComplete = localStorage.getItem('courseComplete') === 'true';
+            if (courseComplete || completedCount === lessons.length) {
+                document.getElementById('completionBanner').classList.add('show');
+            }
+        }
+
+        function resetProgress() {
+            const confirmed = confirm(
+                '⚠️ WARNING ⚠️\n\n' +
+                'This will DELETE all your progress for all lessons!\n\n' +
+                'Are you absolutely sure you want to reset everything?\n\n' +
+                'This action cannot be undone!'
+            );
+
+            if (confirmed) {
+                const doubleCheck = confirm(
+                    'Last chance!\n\n' +
+                    'Click OK to permanently delete all progress.\n' +
+                    'Click Cancel to keep your progress.'
+                );
+
+                if (doubleCheck) {
+                    // Clear all lesson progress
+                    for (let i = 1; i <= 10; i++) {
+                        const lessonNum = i.toString().padStart(2, '0');
+                        localStorage.removeItem(`lesson${lessonNum}Complete`);
+                        localStorage.removeItem(`lesson${lessonNum}Verified`);
+                    }
+                    localStorage.removeItem('courseComplete');
+                    
+                    alert('✅ All progress has been reset! Reload the page to see changes.');
+                    location.reload();
+                }
+            }
+        }
+
+        // Initialize on page load
+        renderLessons();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 09: VS Code Extensions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 20px 0 10px 0;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .example-box {
+            background: #f0f2ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .extension-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .extension-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .extension-card h4 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .extension-card .extension-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .extension-meta span {
+            background: #f0f2ff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding-left: 60px;
+            position: relative;
+            line-height: 1.8;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .quiz-option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+
+        .quiz-option input[type="radio"] {
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+        .activity-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .activity-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .checkboxlist {
+            list-style: none;
+        }
+
+        .checkboxlist li {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkboxlist input[type="checkbox"] {
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .modal p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        ul {
+            margin-left: 30px;
+            line-height: 2;
+        }
+
+        kbd {
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>🧩 Lesson 09: VS Code Extensions</h1>
+            <p>Supercharge Your Editor!</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- A) MATERIAL SECTION -->
+            <section id="materialSection" class="section active">
+                <h2>🚀 What Are Extensions?</h2>
+                
+                <p>Think of VS Code as a smartphone. Out of the box, it's good. But with the right <strong>apps (extensions)</strong>, it becomes <strong>AMAZING!</strong> 🎉</p>
+
+                <div class="example-box">
+                    <h3>🎯 Why Use Extensions?</h3>
+                    <ul>
+                        <li><strong>Save Time:</strong> Auto-format code, live preview, snippets</li>
+                        <li><strong>Look Better:</strong> Custom themes, icons, colors</li>
+                        <li><strong>Code Better:</strong> Error detection, auto-completion, debugging</li>
+                        <li><strong>Work Easier:</strong> Git integration, terminal tools, shortcuts</li>
+                    </ul>
+                </div>
+
+                <h3>📦 How to Install Extensions</h3>
+                <ol class="step-list">
+                    <li>Click the <strong>Extensions icon</strong> in the Activity Bar (or press <kbd>Ctrl+Shift+X</kbd>)</li>
+                    <li>Search for an extension by name</li>
+                    <li>Click the <strong>Install</strong> button</li>
+                    <li>Wait for it to install (usually a few seconds)</li>
+                    <li>Some extensions may require VS Code to reload</li>
+                </ol>
+
+                <h3>🌟 Essential Extensions for Beginners</h3>
+
+                <div class="extension-card">
+                    <h4>🔴 Live Server</h4>
+                    <p>Launch a local development server with live reload! See your HTML changes instantly in the browser without refreshing.</p>
+                    <div class="extension-meta">
+                        <span>⭐ Must-Have</span>
+                        <span>🌐 Web Development</span>
+                    </div>
+                    <p style="margin-top: 15px;"><strong>How to use:</strong> Right-click on an HTML file → "Open with Live Server"</p>
+                </div>
+
+                <div class="extension-card">
+                    <h4>✨ Prettier - Code Formatter</h4>
+                    <p>Automatically format your code to make it clean and readable. No more messy indentation!</p>
+                    <div class="extension-meta">
+                        <span>⭐ Must-Have</span>
+                        <span>🎨 Formatting</span>
+                    </div>
+                    <p style="margin-top: 15px;"><strong>How to use:</strong> Right-click → "Format Document" or press <kbd>Shift+Alt+F</kbd></p>
+                </div>
+
+                <div class="extension-card">
+                    <h4>🏷️ Auto Rename Tag</h4>
+                    <p>When you rename an HTML opening tag, the closing tag automatically updates. Saves tons of time!</p>
+                    <div class="extension-meta">
+                        <span>⭐ Must-Have</span>
+                        <span>📝 HTML</span>
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Example:</strong> Change <code>&lt;div&gt;</code> to <code>&lt;section&gt;</code> and closing tag updates automatically!</p>
+                </div>
+
+                <div class="extension-card">
+                    <h4>🎨 Color Highlight</h4>
+                    <p>Shows the actual color of CSS color codes in your editor. See colors instantly!</p>
+                    <div class="extension-meta">
+                        <span>🎨 CSS</span>
+                        <span>👁️ Visual</span>
+                    </div>
+                    <p style="margin-top: 15px;"><strong>Example:</strong> <code>#ff0000</code> will show a red background in the editor</p>
+                </div>
+
+                <div class="extension-card">
+                    <h4>📁 vscode-icons</h4>
+                    <p>Adds beautiful file icons to your file explorer. Makes it easier to find files at a glance!</p>
+                    <div class="extension-meta">
+                        <span>🎨 Visual</span>
+                        <span>📂 Organization</span>
+                    </div>
+                    <p style="margin-top: 15px;"><strong>How to activate:</strong> File → Preferences → File Icon Theme → VSCode Icons</p>
+                </div>
+
+                <h3>⚙️ Configuring Extensions</h3>
+                <div class="example-box">
+                    <h4>Setting Prettier as Default Formatter:</h4>
+                    <ol class="step-list">
+                        <li>Open Settings (<kbd>Ctrl+,</kbd>)</li>
+                        <li>Search for "default formatter"</li>
+                        <li>Select <strong>Prettier - Code formatter</strong></li>
+                        <li>Search for "format on save"</li>
+                        <li>Check the box to enable <strong>Format On Save</strong></li>
+                    </ol>
+                    <p style="margin-top: 15px;">Now your code will automatically format every time you save! 🎉</p>
+                </div>
+
+                <h3>🔍 Finding More Extensions</h3>
+                <p>Browse the <strong>Extensions Marketplace</strong> to find thousands of extensions:</p>
+                <ul>
+                    <li><strong>Themes:</strong> Dark themes, light themes, colorful themes</li>
+                    <li><strong>Language Support:</strong> Python, Java, C++, and more</li>
+                    <li><strong>Productivity:</strong> GitLens, TODO Highlight, Bracket Pair Colorizer</li>
+                    <li><strong>Fun:</strong> Power Mode (explosions when you type!)</li>
+                </ul>
+
+                <div class="example-box">
+                    <h3>💡 Pro Tips</h3>
+                    <ul>
+                        <li>Don't install too many extensions at once - start with the essentials</li>
+                        <li>Read reviews and check ratings before installing</li>
+                        <li>Disable extensions you don't use to keep VS Code fast</li>
+                        <li>Update extensions regularly for bug fixes and new features</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-primary" onclick="showQuiz()">Take the Quiz! 📝</button>
+                </div>
+            </section>
+
+            <!-- B) QUIZ SECTION -->
+            <section id="quizSection" class="section">
+                <h2>📝 Quiz Time!</h2>
+                <p>Answer all questions correctly to unlock the activities!</p>
+                <p style="margin-bottom: 30px;">Current Score: <strong><span id="quizScore">0</span>/5</strong></p>
+
+                <div class="activity-box">
+                    <h3>Question 1: What keyboard shortcut opens the Extensions panel?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'c')">
+                        <input type="radio" name="q1" value="a"> 
+                        <span>A) Ctrl+E</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'c')">
+                        <input type="radio" name="q1" value="b">
+                        <span>B) Ctrl+X</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'c')">
+                        <input type="radio" name="q1" value="c">
+                        <span>C) Ctrl+Shift+X</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'c')">
+                        <input type="radio" name="q1" value="d">
+                        <span>D) Ctrl+Alt+E</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 2: What does Live Server do?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'b')">
+                        <input type="radio" name="q2" value="a">
+                        <span>A) Formats your code automatically</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'b')">
+                        <input type="radio" name="q2" value="b">
+                        <span>B) Launches a development server with live reload</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'b')">
+                        <input type="radio" name="q2" value="c">
+                        <span>C) Changes file icons</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'b')">
+                        <input type="radio" name="q2" value="d">
+                        <span>D) Adds Git integration</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 3: Which extension automatically formats your code?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'a')">
+                        <input type="radio" name="q3" value="a">
+                        <span>A) Prettier</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'a')">
+                        <input type="radio" name="q3" value="b">
+                        <span>B) Live Server</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'a')">
+                        <input type="radio" name="q3" value="c">
+                        <span>C) vscode-icons</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'a')">
+                        <input type="radio" name="q3" value="d">
+                        <span>D) Color Highlight</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 4: What does Auto Rename Tag do?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'b')">
+                        <input type="radio" name="q4" value="a">
+                        <span>A) Renames files automatically</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'b')">
+                        <input type="radio" name="q4" value="b">
+                        <span>B) Updates closing HTML tags when you change opening tags</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'b')">
+                        <input type="radio" name="q4" value="c">
+                        <span>C) Creates new tags automatically</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'b')">
+                        <input type="radio" name="q4" value="d">
+                        <span>D) Deletes unused tags</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 5: Why should you read reviews before installing extensions?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'c')">
+                        <input type="radio" name="q5" value="a">
+                        <span>A) To waste time</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'c')">
+                        <input type="radio" name="q5" value="b">
+                        <span>B) Reviews don't matter</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'c')">
+                        <input type="radio" name="q5" value="c">
+                        <span>C) To check quality and avoid bad extensions</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'c')">
+                        <input type="radio" name="q5" value="d">
+                        <span>D) Extensions don't need reviews</span>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" onclick="showMaterial()">← Back to Material</button>
+                    <button class="btn-primary" onclick="checkQuiz()">Check Answers</button>
+                </div>
+            </section>
+
+            <!-- D) ACTIVITIES SECTION -->
+            <section id="activitiesSection" class="section">
+                <h2>🎯 Practice Activities</h2>
+                <p>Complete ALL activities in VS Code to master extensions! (<span id="activityCount">0</span>/15 completed)</p>
+
+                <div class="activity-box">
+                    <h3>🧩 Activity 1: Install Essential Extensions</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Press <kbd>Ctrl+Shift+X</kbd> to open Extensions panel</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Search for "Live Server" and install it</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Search for "Prettier - Code formatter" and install it</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Search for "Auto Rename Tag" and install it</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Search for "Color Highlight" and install it</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>⚙️ Activity 2: Configure Prettier</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Open Settings with <kbd>Ctrl+,</kbd></li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Search for "default formatter" and set to Prettier</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Search for "format on save" and enable it</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create a test HTML file with messy formatting</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Press <kbd>Shift+Alt+F</kbd> to format it (or save to auto-format)</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>🚀 Activity 3: Test Live Server</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create a simple HTML file (or use an existing one)</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Right-click on the file → "Open with Live Server"</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Verify your webpage opens in browser automatically</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Make a change to the HTML and save</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Watch the browser auto-refresh with your changes! 🎉</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" onclick="showQuiz()">← Back to Quiz</button>
+                    <button class="btn-primary" onclick="completeLesson()">Complete Lesson! 🎉</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for feedback -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div id="modalIcon" class="modal-icon"></div>
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button class="btn-primary" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            '1': 'c',
+            '2': 'b',
+            '3': 'a',
+            '4': 'b',
+            '5': 'c'
+        };
+
+        let selectedAnswers = {};
+
+        function updateProgress(percentage) {
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        function showMaterial() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('materialSection').classList.add('active');
+            updateProgress(0);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function showQuiz() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('quizSection').classList.add('active');
+            updateProgress(33);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function showActivities() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('activitiesSection').classList.add('active');
+            updateProgress(66);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function selectAnswer(element, questionNum, correctAnswer) {
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            const allOptions = element.parentElement.querySelectorAll('.quiz-option');
+            allOptions.forEach(opt => {
+                opt.style.background = '#f8f9fa';
+                opt.style.borderColor = '#e0e0e0';
+            });
+            
+            element.style.background = '#f0f2ff';
+            element.style.borderColor = '#667eea';
+            
+            selectedAnswers[questionNum] = radio.value;
+        }
+
+        function checkQuiz() {
+            let score = 0;
+            
+            for (let q in correctAnswers) {
+                if (selectedAnswers[q] === correctAnswers[q]) {
+                    score++;
+                }
+            }
+
+            document.getElementById('quizScore').textContent = score;
+
+            if (score === 5) {
+                showModal('success', 'Perfect Score! 🎉', 'You got all answers correct! Activities unlocked!');
+                setTimeout(() => {
+                    showActivities();
+                }, 2000);
+            } else {
+                showModal('error', 'Not Quite There', `You got ${score}/5 correct. Review the material and try again! You need all correct to unlock activities.`);
+            }
+        }
+
+        let activityGroupsCompleted = {
+            group1: false,
+            group2: false,
+            group3: false
+        };
+
+        function checkActivity(checkbox) {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            document.getElementById('activityCount').textContent = checkedBoxes;
+
+            if (checkbox.checked) {
+                const activityBox = checkbox.closest('.activity-box');
+                const boxCheckboxes = activityBox.querySelectorAll('input[type="checkbox"]');
+                const boxCheckedCount = activityBox.querySelectorAll('input[type="checkbox"]:checked').length;
+                
+                if (boxCheckedCount === boxCheckboxes.length) {
+                    const activityBoxes = document.querySelectorAll('.activity-box');
+                    const groupIndex = Array.from(activityBoxes).indexOf(activityBox);
+                    const groupKey = `group${groupIndex + 1}`;
+                    
+                    if (!activityGroupsCompleted[groupKey]) {
+                        activityGroupsCompleted[groupKey] = true;
+                        showModal('success', 'Activity Group Complete! 🎉', 
+                            `Excellent! Make sure these extensions are actually installed and working!`);
+                    }
+                }
+            }
+        }
+
+        function showModal(type, title, message) {
+            const modal = document.getElementById('modal');
+            const icon = document.getElementById('modalIcon');
+            const titleEl = document.getElementById('modalTitle');
+            const messageEl = document.getElementById('modalMessage');
+
+            if (type === 'success') {
+                icon.innerHTML = '<div class="success-icon">✅</div>';
+                icon.style.color = '#28a745';
+            } else {
+                icon.innerHTML = '<div class="error-icon">❌</div>';
+                icon.style.color = '#dc3545';
+            }
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function completeLesson() {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            
+            if (checkedBoxes < 15) {
+                showModal('error', 'Activities Incomplete', 'Please complete ALL activities before finishing the lesson!');
+                return;
+            }
+
+            const allGroupsComplete = activityGroupsCompleted.group1 && 
+                                     activityGroupsCompleted.group2 && 
+                                     activityGroupsCompleted.group3;
+            
+            if (!allGroupsComplete) {
+                showModal('error', 'Not All Activities Verified', 
+                    'Please make sure you complete each activity GROUP (all checkboxes in each section) before finishing!');
+                return;
+            }
+
+            const confirmed = confirm(
+                '⚠️ IMPORTANT VERIFICATION ⚠️\n\n' +
+                'Did you ACTUALLY complete these activities in VS Code?\n\n' +
+                '✅ Installed Live Server, Prettier, Auto Rename Tag, and Color Highlight?\n' +
+                '✅ Configured Prettier as default formatter with format on save?\n' +
+                '✅ Tested Live Server with an HTML file and saw auto-reload work?\n\n' +
+                'Click OK only if these extensions are truly installed and working.\n' +
+                'Click Cancel to go back and actually install them.'
+            );
+
+            if (!confirmed) {
+                showModal('error', 'Go Install the Extensions', 
+                    'Please actually install and test these extensions. They will make your coding much easier!');
+                return;
+            }
+
+            showModal('success', 'Lesson Complete! 🏆', 
+                'Congratulations! You completed Lesson 09 and verified your work. Ready for the Final Project?');
+            
+            localStorage.setItem('lesson09Complete', 'true');
+            localStorage.setItem('lesson09Verified', 'true');
+            
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 3000);
+        }
+
+        function goBack() {
+            window.location.href = '../index.html';
+        }
+
+        updateProgress(0);
+    </script>
+
+</body>
+</html>

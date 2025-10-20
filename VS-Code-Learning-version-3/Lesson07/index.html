@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 07: Project Organization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 20px 0 10px 0;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            border-left: 4px solid #a8c0ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .quiz-option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-option:hover {
+            border-color: #a8c0ff;
+            background: #e8f4f8;
+        }
+
+        .quiz-option input[type="radio"] {
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+        .activity-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .activity-box h3 {
+            color: #a8c0ff;
+            margin-bottom: 15px;
+        }
+
+        .checkboxlist {
+            list-style: none;
+        }
+
+        .checkboxlist li {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkboxlist input[type="checkbox"] {
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .modal p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        ul {
+            margin-left: 30px;
+            line-height: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>📁 Lesson 07: Project Organization</h1>
+            <p>Organize Like a Pro!</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- A) MATERIAL SECTION -->
+            <section id="materialSection" class="section active">
+                <h2>📚 Why Organization Matters</h2>
+                
+                <p>Imagine your room with clothes everywhere, books on the floor, and toys mixed with homework. Hard to find anything, right? <strong>The same is true for code!</strong></p>
+
+                <div class="example-box">
+                    <h3>🏗️ Professional Project Structure</h3>
+                    <div class="code-box">
+                        <pre>
+my-website/
+├── index.html          ← Home page (always index.html!)
+├── about.html          ← About page
+├── contact.html        ← Contact page
+│
+├── css/                ← All CSS files here
+│   ├── style.css
+│   └── themes.css
+│
+├── js/                 ← All JavaScript files here
+│   ├── main.js
+│   └── animations.js
+│
+├── images/             ← All images here
+│   ├── logo.png
+│   ├── photo1.jpg
+│   └── background.jpg
+│
+└── README.md           ← Project description
+                        </pre>
+                    </div>
+                </div>
+
+                <h3>🔗 Linking Files Together</h3>
+                <p><strong>Linking CSS Files:</strong></p>
+                <div class="code-box">
+                    <pre>
+&lt;!-- In your HTML &lt;head&gt; section --&gt;
+&lt;link rel="stylesheet" href="css/style.css"&gt;
+                    </pre>
+                </div>
+
+                <p><strong>Linking JavaScript Files:</strong></p>
+                <div class="code-box">
+                    <pre>
+&lt;!-- Before closing &lt;/body&gt; tag --&gt;
+&lt;script src="js/main.js"&gt;&lt;/script&gt;
+                    </pre>
+                </div>
+
+                <p><strong>Linking HTML Pages:</strong></p>
+                <div class="code-box">
+                    <pre>
+&lt;nav&gt;
+    &lt;a href="index.html"&gt;Home&lt;/a&gt;
+    &lt;a href="about.html"&gt;About&lt;/a&gt;
+    &lt;a href="contact.html"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;
+                    </pre>
+                </div>
+
+                <h3>📝 File Naming Best Practices</h3>
+                <div class="example-box">
+                    <p><strong>✅ Good Names:</strong></p>
+                    <ul>
+                        <li>index.html</li>
+                        <li>about-me.html</li>
+                        <li>style.css</li>
+                        <li>main.js</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>❌ Bad Names:</strong></p>
+                    <ul>
+                        <li>My File.html (spaces!)</li>
+                        <li>PAGE1.HTML (ALL CAPS!)</li>
+                        <li>asdf.html (not descriptive!)</li>
+                        <li>file@#$.html (special characters!)</li>
+                    </ul>
+                </div>
+
+                <h3>🗺️ Understanding File Paths</h3>
+                <div class="code-box">
+                    <pre>
+ABSOLUTE PATH (full address):
+C:/Users/You/Documents/my-website/css/style.css
+
+RELATIVE PATH (from current file):
+css/style.css           ← Go into css folder
+../index.html           ← Go up one folder
+images/logo.png         ← Go into images folder
+                    </pre>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-primary" onclick="showQuiz()">Take the Quiz! 📝</button>
+                </div>
+            </section>
+
+            <!-- B) QUIZ SECTION -->
+            <section id="quizSection" class="section">
+                <h2>📝 Quiz Time!</h2>
+                <p>Answer all questions correctly to unlock the activities!</p>
+                <p style="margin-bottom: 30px;">Current Score: <strong><span id="quizScore">0</span>/5</strong></p>
+
+                <div class="activity-box">
+                    <h3>Question 1: Where should CSS files go?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'b')">
+                        <input type="radio" name="q1" value="a"> 
+                        <span>A) In the root folder with HTML</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'b')">
+                        <input type="radio" name="q1" value="b">
+                        <span>B) In a css/ folder</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'b')">
+                        <input type="radio" name="q1" value="c">
+                        <span>C) In the images/ folder</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'b')">
+                        <input type="radio" name="q1" value="d">
+                        <span>D) Anywhere you want</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 2: What is the main home page always called?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'a')">
+                        <input type="radio" name="q2" value="a">
+                        <span>A) index.html</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'a')">
+                        <input type="radio" name="q2" value="b">
+                        <span>B) home.html</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'a')">
+                        <input type="radio" name="q2" value="c">
+                        <span>C) main.html</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'a')">
+                        <input type="radio" name="q2" value="d">
+                        <span>D) page1.html</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 3: How do you link to a CSS file in a css/ folder?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="a">
+                        <span>A) &lt;link href="style.css"&gt;</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="b">
+                        <span>B) &lt;link href="../style.css"&gt;</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="c">
+                        <span>C) &lt;link rel="stylesheet" href="css/style.css"&gt;</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="d">
+                        <span>D) &lt;css src="style.css"&gt;</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 4: Which is a good file name?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'b')">
+                        <input type="radio" name="q4" value="a">
+                        <span>A) My File.html</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'b')">
+                        <input type="radio" name="q4" value="b">
+                        <span>B) about-me.html</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'b')">
+                        <input type="radio" name="q4" value="c">
+                        <span>C) FILE@123.html</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'b')">
+                        <input type="radio" name="q4" value="d">
+                        <span>D) MYPAGE.HTML</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 5: What does "../" mean in a file path?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="a">
+                        <span>A) Go into a folder</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="b">
+                        <span>B) Go up one folder level</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="c">
+                        <span>C) Current folder</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="d">
+                        <span>D) Root folder</span>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" onclick="showMaterial()">← Back to Material</button>
+                    <button class="btn-primary" onclick="checkQuiz()">Check Answers</button>
+                </div>
+            </section>
+
+            <!-- D) ACTIVITIES SECTION -->
+            <section id="activitiesSection" class="section">
+                <h2>🎯 Practice Activities</h2>
+                <p>Complete ALL activities in VS Code to master project organization! (<span id="activityCount">0</span>/13 completed)</p>
+
+                <div class="activity-box">
+                    <h3>📁 Activity 1: Create Your Project Structure</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create a folder called "my-first-website"</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Inside it, create folders: css, js, images</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create index.html in the root folder</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create about.html and contact.html in root</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create style.css in the css folder</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>🔗 Activity 2: Link Your Files Together</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Add CSS link to index.html: &lt;link rel="stylesheet" href="css/style.css"&gt;</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Add navigation with links to all 3 pages</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Test that navigation works by clicking links</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Add some CSS rules to style.css</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>🌐 Activity 3: Build a Multi-Page Website</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Copy navigation to about.html and contact.html</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Add unique content to each page</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create main.js in the js folder</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Link main.js to all HTML pages</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" onclick="showQuiz()">← Back to Quiz</button>
+                    <button class="btn-primary" onclick="completeLesson()">Complete Lesson! 🎉</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for feedback -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div id="modalIcon" class="modal-icon"></div>
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button class="btn-primary" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            '1': 'b',
+            '2': 'a',
+            '3': 'c',
+            '4': 'b',
+            '5': 'b'
+        };
+
+        let selectedAnswers = {};
+
+        function updateProgress(percentage) {
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        function showMaterial() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('materialSection').classList.add('active');
+            updateProgress(0);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function showQuiz() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('quizSection').classList.add('active');
+            updateProgress(33);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function showActivities() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('activitiesSection').classList.add('active');
+            updateProgress(66);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function selectAnswer(element, questionNum, correctAnswer) {
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            const allOptions = element.parentElement.querySelectorAll('.quiz-option');
+            allOptions.forEach(opt => {
+                opt.style.background = '#f8f9fa';
+                opt.style.borderColor = '#e0e0e0';
+            });
+            
+            element.style.background = '#e8f4f8';
+            element.style.borderColor = '#a8c0ff';
+            
+            selectedAnswers[questionNum] = radio.value;
+        }
+
+        function checkQuiz() {
+            let score = 0;
+            
+            for (let q in correctAnswers) {
+                if (selectedAnswers[q] === correctAnswers[q]) {
+                    score++;
+                }
+            }
+
+            document.getElementById('quizScore').textContent = score;
+
+            if (score === 5) {
+                showModal('success', 'Perfect Score! 🎉', 'You got all answers correct! Activities unlocked!');
+                setTimeout(() => {
+                    showActivities();
+                }, 2000);
+            } else {
+                showModal('error', 'Not Quite There', `You got ${score}/5 correct. Review the material and try again! You need all correct to unlock activities.`);
+            }
+        }
+
+        let activityGroupsCompleted = {
+            group1: false,
+            group2: false,
+            group3: false
+        };
+
+        function checkActivity(checkbox) {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            document.getElementById('activityCount').textContent = checkedBoxes;
+
+            if (checkbox.checked) {
+                const activityBox = checkbox.closest('.activity-box');
+                const boxCheckboxes = activityBox.querySelectorAll('input[type="checkbox"]');
+                const boxCheckedCount = activityBox.querySelectorAll('input[type="checkbox"]:checked').length;
+                
+                if (boxCheckedCount === boxCheckboxes.length) {
+                    const activityBoxes = document.querySelectorAll('.activity-box');
+                    const groupIndex = Array.from(activityBoxes).indexOf(activityBox);
+                    const groupKey = `group${groupIndex + 1}`;
+                    
+                    if (!activityGroupsCompleted[groupKey]) {
+                        activityGroupsCompleted[groupKey] = true;
+                        showModal('success', 'Activity Group Complete! 🎉', 
+                            `Great job! Make sure you actually completed these tasks in VS Code before moving on!`);
+                    }
+                }
+            }
+        }
+
+        function showModal(type, title, message) {
+            const modal = document.getElementById('modal');
+            const icon = document.getElementById('modalIcon');
+            const titleEl = document.getElementById('modalTitle');
+            const messageEl = document.getElementById('modalMessage');
+
+            if (type === 'success') {
+                icon.innerHTML = '<div class="success-icon">✅</div>';
+                icon.style.color = '#28a745';
+            } else {
+                icon.innerHTML = '<div class="error-icon">❌</div>';
+                icon.style.color = '#dc3545';
+            }
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function completeLesson() {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            
+            if (checkedBoxes < 13) {
+                showModal('error', 'Activities Incomplete', 'Please complete ALL activities before finishing the lesson!');
+                return;
+            }
+
+            const allGroupsComplete = activityGroupsCompleted.group1 && 
+                                     activityGroupsCompleted.group2 && 
+                                     activityGroupsCompleted.group3;
+            
+            if (!allGroupsComplete) {
+                showModal('error', 'Not All Activities Verified', 
+                    'Please make sure you complete each activity GROUP (all checkboxes in each section) before finishing!');
+                return;
+            }
+
+            const confirmed = confirm(
+                '⚠️ IMPORTANT VERIFICATION ⚠️\n\n' +
+                'Did you ACTUALLY complete these activities in VS Code?\n\n' +
+                '✅ Created folder structure with css/, js/, images/ folders?\n' +
+                '✅ Created and linked multiple HTML pages?\n' +
+                '✅ Built a working multi-page website?\n\n' +
+                'Click OK only if you truly completed these tasks.\n' +
+                'Click Cancel to go back and finish them.'
+            );
+
+            if (!confirmed) {
+                showModal('error', 'Go Complete the Activities', 
+                    'Please actually complete the activities in VS Code. Learning by doing is important!');
+                return;
+            }
+
+            showModal('success', 'Lesson Complete! 🏆', 
+                'Congratulations! You completed Lesson 07 and verified your work. Ready for Lesson 08?');
+            
+            localStorage.setItem('lesson07Complete', 'true');
+            localStorage.setItem('lesson07Verified', 'true');
+            
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 3000);
+        }
+
+        function goBack() {
+            window.location.href = '../index.html';
+        }
+
+        updateProgress(0);
+    </script>
+
+</body>
+</html>

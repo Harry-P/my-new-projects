@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 02: Creating and Managing Files</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; display: none; }
+        .section.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .section h2 { color: #11998e; font-size: 2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section h3 { color: #38ef7d; font-size: 1.5rem; margin: 20px 0 10px 0; }
+        .section p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 15px; color: #333; }
+        .section ul { margin-left: 30px; margin-bottom: 15px; }
+        .section li { margin: 8px 0; font-size: 1.1rem; }
+        .example-box { background: #f8f9fa; border-left: 4px solid #11998e; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .code-box { background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 10px; margin: 20px 0; font-family: 'Courier New', monospace; overflow-x: auto; }
+        .quiz-question { background: #f8f9fa; padding: 25px; margin: 20px 0; border-radius: 10px; border: 2px solid #e0e0e0; }
+        .quiz-question h4 { color: #11998e; font-size: 1.2rem; margin-bottom: 15px; }
+        .quiz-options { list-style: none; padding: 0; }
+        .quiz-options li { padding: 15px; margin: 10px 0; background: white; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; }
+        .quiz-options li:hover { background: #f0f0f0; border-color: #11998e; transform: translateX(5px); }
+        .quiz-options li.selected { background: #e3f2fd; border-color: #11998e; }
+        .quiz-options li input[type="radio"] { margin-right: 10px; transform: scale(1.3); cursor: pointer; }
+        .quiz-options li.correct { background: #d4edda; border-color: #28a745; }
+        .quiz-options li.incorrect { background: #f8d7da; border-color: #dc3545; }
+        .btn { padding: 15px 40px; font-size: 1.1rem; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; font-weight: bold; margin: 10px 5px; }
+        .btn-primary { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(17, 153, 142, 0.3); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .progress-bar { width: 100%; height: 10px; background: #e0e0e0; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%); width: 0%; transition: width 0.5s; }
+        .score-display { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; font-size: 1.3rem; margin: 20px 0; }
+        .activity-box { background: #e7f3ff; border: 2px solid #2196F3; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .activity-box h4 { color: #1976D2; margin-bottom: 10px; }
+        .checkboxlist { list-style: none; padding: 0; }
+        .checkboxlist li { padding: 10px; margin: 5px 0; background: white; border-radius: 5px; }
+        .checkboxlist input[type="checkbox"] { margin-right: 10px; transform: scale(1.3); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; padding: 40px; border-radius: 20px; max-width: 500px; text-align: center; animation: slideDown 0.3s; }
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-content h3 { color: #11998e; margin-bottom: 15px; font-size: 1.8rem; }
+        .modal-content p { font-size: 1.1rem; margin-bottom: 20px; }
+        .success-icon { font-size: 4rem; margin-bottom: 20px; }
+        .error-icon { font-size: 4rem; margin-bottom: 20px; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e0e0e0; }
+        .locked { opacity: 0.5; pointer-events: none; }
+        .keyboard-key { background: #f0f0f0; border: 2px solid #ccc; border-radius: 5px; padding: 5px 10px; font-family: 'Courier New', monospace; font-weight: bold; display: inline-block; margin: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>📁 Lesson 02: Creating and Managing Files</h1>
+            <p>Time: 20-25 minutes | Difficulty: Easy ⭐⭐</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            
+            <!-- A. LEARNING MATERIAL -->
+            <div id="materialSection" class="section active">
+                <h2>📖 Part A: Learning Material</h2>
+                
+                <h3>What You'll Learn Today</h3>
+                <ul>
+                    <li>✅ How to create new files and folders in VS Code</li>
+                    <li>✅ How to open, save, and close files</li>
+                    <li>✅ How to rename and delete files</li>
+                    <li>✅ Important keyboard shortcuts</li>
+                </ul>
+
+                <h3>📖 Working with Files</h3>
+                <div class="example-box">
+                    <p><strong>Think of VS Code like a digital filing cabinet:</strong></p>
+                    <p>🗂️ <strong>Folders</strong> = Drawers where you organize things<br>
+                    📄 <strong>Files</strong> = Papers inside those drawers<br>
+                    💻 <strong>VS Code</strong> = Your workspace to manage them all!</p>
+                </div>
+
+                <h3>Creating New Files (3 Ways)</h3>
+                <div class="code-box">
+<strong>Method 1: Using the Menu</strong><br>
+File → New File<br>
+Then: File → Save As... → Choose name and location<br><br>
+
+<strong>Method 2: Using the Explorer</strong><br>
+1. Click the Explorer icon (📁) on the left<br>
+2. Click the "New File" icon (📄 with +)<br>
+3. Type the filename<br><br>
+
+<strong>Method 3: Using Keyboard Shortcut</strong><br>
+Windows: <span class="keyboard-key">Ctrl</span> + <span class="keyboard-key">N</span><br>
+Mac: <span class="keyboard-key">Cmd</span> + <span class="keyboard-key">N</span>
+                </div>
+
+                <h3>File Naming Rules</h3>
+                <div class="example-box">
+                    <p><strong>✅ Good Names:</strong></p>
+                    <p>• my-website.html<br>
+                    • index.css<br>
+                    • app.js<br>
+                    • README.md</p>
+                    
+                    <p><strong>❌ Bad Names:</strong></p>
+                    <p>• my website.html (space = problems!)<br>
+                    • file#1.txt (special characters = no!)<br>
+                    • MyFile.HTML (inconsistent capitalization)</p>
+                </div>
+
+                <h3>File Extensions (The .something at the end)</h3>
+                <div class="code-box">
+.html  →  Web pages<br>
+.css   →  Styling (colors, fonts)<br>
+.js    →  JavaScript (interactivity)<br>
+.txt   →  Plain text<br>
+.md    →  Markdown (formatted text)<br>
+.py    →  Python code<br>
+.json  →  Data files
+                </div>
+
+                <h3>Creating Folders</h3>
+                <div class="example-box">
+                    <p><strong>Why use folders?</strong> To organize your projects!</p>
+                    <p><strong>Example Project Structure:</strong></p>
+                </div>
+                <div class="code-box">
+my-website/<br>
+├── index.html<br>
+├── styles/<br>
+│   └── main.css<br>
+├── scripts/<br>
+│   └── app.js<br>
+└── images/<br>
+    └── logo.png
+                </div>
+
+                <h3>Essential Keyboard Shortcuts</h3>
+                <div class="example-box">
+                    <p><span class="keyboard-key">Ctrl/Cmd</span> + <span class="keyboard-key">N</span> = New File</p>
+                    <p><span class="keyboard-key">Ctrl/Cmd</span> + <span class="keyboard-key">S</span> = Save File</p>
+                    <p><span class="keyboard-key">Ctrl/Cmd</span> + <span class="keyboard-key">W</span> = Close File</p>
+                    <p><span class="keyboard-key">Ctrl/Cmd</span> + <span class="keyboard-key">Shift</span> + <span class="keyboard-key">S</span> = Save As</p>
+                    <p><span class="keyboard-key">Ctrl/Cmd</span> + <span class="keyboard-key">O</span> = Open File</p>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="goBack()">⬅️ Back to Home</button>
+                    <button class="btn btn-primary" onclick="showQuiz()">Continue to Quiz ➡️</button>
+                </div>
+            </div>
+
+            <!-- B. QUIZ SECTION -->
+            <div id="quizSection" class="section">
+                <h2>🎯 Part B: Test Your Knowledge</h2>
+                <p>Answer all questions correctly to unlock the activities!</p>
+
+                <div class="quiz-question">
+                    <h4>Question 1: What is the keyboard shortcut to create a new file?</h4>
+                    <ul class="quiz-options" id="q1Options">
+                        <li onclick="selectAnswer(1, 'a')"><input type="radio" name="q1" value="a"> A) Ctrl/Cmd + N</li>
+                        <li onclick="selectAnswer(1, 'b')"><input type="radio" name="q1" value="b"> B) Ctrl/Cmd + F</li>
+                        <li onclick="selectAnswer(1, 'c')"><input type="radio" name="q1" value="c"> C) Ctrl/Cmd + O</li>
+                        <li onclick="selectAnswer(1, 'd')"><input type="radio" name="q1" value="d"> D) Ctrl/Cmd + P</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2: Which file extension is used for web pages?</h4>
+                    <ul class="quiz-options" id="q2Options">
+                        <li onclick="selectAnswer(2, 'a')"><input type="radio" name="q2" value="a"> A) .css</li>
+                        <li onclick="selectAnswer(2, 'b')"><input type="radio" name="q2" value="b"> B) .js</li>
+                        <li onclick="selectAnswer(2, 'c')"><input type="radio" name="q2" value="c"> C) .html</li>
+                        <li onclick="selectAnswer(2, 'd')"><input type="radio" name="q2" value="d"> D) .txt</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3: What's wrong with the filename "my website.html"?</h4>
+                    <ul class="quiz-options" id="q3Options">
+                        <li onclick="selectAnswer(3, 'a')"><input type="radio" name="q3" value="a"> A) It has a space (should use - or _)</li>
+                        <li onclick="selectAnswer(3, 'b')"><input type="radio" name="q3" value="b"> B) It's too long</li>
+                        <li onclick="selectAnswer(3, 'c')"><input type="radio" name="q3" value="c"> C) It needs capital letters</li>
+                        <li onclick="selectAnswer(3, 'd')"><input type="radio" name="q3" value="d"> D) Nothing is wrong</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 4: How do you save a file in VS Code?</h4>
+                    <ul class="quiz-options" id="q4Options">
+                        <li onclick="selectAnswer(4, 'a')"><input type="radio" name="q4" value="a"> A) Ctrl/Cmd + W</li>
+                        <li onclick="selectAnswer(4, 'b')"><input type="radio" name="q4" value="b"> B) Ctrl/Cmd + S</li>
+                        <li onclick="selectAnswer(4, 'c')"><input type="radio" name="q4" value="c"> C) Ctrl/Cmd + O</li>
+                        <li onclick="selectAnswer(4, 'd')"><input type="radio" name="q4" value="d"> D) Ctrl/Cmd + N</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 5: Why do we use folders in projects?</h4>
+                    <ul class="quiz-options" id="q5Options">
+                        <li onclick="selectAnswer(5, 'a')"><input type="radio" name="q5" value="a"> A) To make files load faster</li>
+                        <li onclick="selectAnswer(5, 'b')"><input type="radio" name="q5" value="b"> B) To organize and structure our code</li>
+                        <li onclick="selectAnswer(5, 'c')"><input type="radio" name="q5" value="c"> C) VS Code requires them</li>
+                        <li onclick="selectAnswer(5, 'd')"><input type="radio" name="q5" value="d"> D) They're not useful</li>
+                    </ul>
+                </div>
+
+                <div class="score-display" id="scoreDisplay" style="display: none;">
+                    Your Score: <span id="scoreText">0/5</span>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="showMaterial()">⬅️ Back to Material</button>
+                    <button class="btn btn-primary" onclick="checkQuiz()" id="checkQuizBtn">Check Answers 📝</button>
+                </div>
+            </div>
+
+            <!-- D & E. ACTIVITIES SECTION -->
+            <div id="activitiesSection" class="section locked">
+                <h2>🎮 Part D: Interactive Activities</h2>
+                <p>Perfect! Now let's practice creating and managing files!</p>
+
+                <div class="activity-box">
+                    <h4>✅ Activity 1: Create Your First Files</h4>
+                    <p>Create these files in VS Code:</p>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create a file named index.html</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create a file named style.css</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create a file named script.js</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create a file named README.md</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h4>✅ Activity 2: Practice Keyboard Shortcuts</h4>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Used Ctrl/Cmd+N to create a new file</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Used Ctrl/Cmd+S to save the file</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Used Ctrl/Cmd+W to close a file</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Used Ctrl/Cmd+Shift+S to "Save As"</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h4>✅ Activity 3: Create a Folder Structure</h4>
+                    <p>Create this folder structure for a project:</p>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Created a folder named "my-project"</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Created a "styles" folder inside it</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Created a "scripts" folder inside it</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Created an index.html in the main folder</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Created a main.css in the styles folder</li>
+                    </ul>
+                </div>
+
+                <div class="score-display">
+                    Activities Completed: <span id="activityCount">0</span>/13
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="showQuiz()">⬅️ Back to Quiz</button>
+                    <button class="btn btn-primary" onclick="completeLesson()">Complete Lesson 🎉</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FEEDBACK MODAL -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div id="modalIcon"></div>
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button class="btn btn-primary" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        let answers = { 1: null, 2: null, 3: null, 4: null, 5: null };
+        const correctAnswers = { 1: 'a', 2: 'c', 3: 'a', 4: 'b', 5: 'b' };
+        let quizPassed = false;
+
+        function updateProgress(percentage) {
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        function showMaterial() {
+            hideAllSections();
+            document.getElementById('materialSection').classList.add('active');
+            updateProgress(33);
+            
+            // Scroll to the top of the page
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function showQuiz() {
+            hideAllSections();
+            document.getElementById('quizSection').classList.add('active');
+            updateProgress(66);
+            
+            // Scroll to the top of the page to show Question 1
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function showActivities() {
+            if (!quizPassed) {
+                showModal('error', 'Quiz Not Passed', 'You need to pass the quiz first! Make sure all answers are correct.');
+                return;
+            }
+            hideAllSections();
+            document.getElementById('activitiesSection').classList.remove('locked');
+            document.getElementById('activitiesSection').classList.add('active');
+            updateProgress(100);
+            
+            // Scroll to the top of the page to show Activity 1
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+        }
+
+        function selectAnswer(question, answer) {
+            document.querySelectorAll(`#q${question}Options li`).forEach(li => {
+                li.classList.remove('selected');
+            });
+            event.target.closest('li').classList.add('selected');
+            const radio = event.target.closest('li').querySelector('input[type="radio"]');
+            if (radio) {
+                radio.checked = true;
+            }
+            answers[question] = answer;
+        }
+
+        function checkQuiz() {
+            if (Object.values(answers).includes(null)) {
+                showModal('error', 'Incomplete Quiz', 'Please answer all questions before checking!');
+                return;
+            }
+
+            let score = 0;
+            let allCorrect = true;
+
+            for (let q = 1; q <= 5; q++) {
+                const options = document.querySelectorAll(`#q${q}Options li`);
+                const userAnswer = answers[q];
+                const correctAnswer = correctAnswers[q];
+
+                options.forEach((li, index) => {
+                    const answerLetter = String.fromCharCode(97 + index);
+                    li.classList.remove('correct', 'incorrect');
+                    
+                    if (answerLetter === correctAnswer) {
+                        li.classList.add('correct');
+                    }
+                    
+                    if (answerLetter === userAnswer && userAnswer !== correctAnswer) {
+                        li.classList.add('incorrect');
+                        allCorrect = false;
+                    }
+                });
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                }
+            }
+
+            document.getElementById('scoreText').textContent = `${score}/5`;
+            document.getElementById('scoreDisplay').style.display = 'block';
+
+            if (allCorrect) {
+                quizPassed = true;
+                showModal('success', 'Perfect Score! 🎉', `Congratulations! You got all ${score} questions correct! The activities are now unlocked.`);
+                setTimeout(showActivities, 2000);
+            } else {
+                showModal('error', 'Not Quite There', `You got ${score}/5 correct. Review the material and try again! You need all correct to unlock activities.`);
+            }
+        }
+
+        // Activity checking with verification
+        let activityGroupsCompleted = {
+            group1: false,
+            group2: false,
+            group3: false
+        };
+
+        function checkActivity(checkbox) {
+            const totalCheckboxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]').length;
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            
+            document.getElementById('activityCount').textContent = checkedBoxes;
+
+            // Check if all checkboxes in the current activity box are completed
+            if (checkbox.checked) {
+                const activityBox = checkbox.closest('.activity-box');
+                const boxCheckboxes = activityBox.querySelectorAll('input[type="checkbox"]');
+                const boxCheckedCount = activityBox.querySelectorAll('input[type="checkbox"]:checked').length;
+                
+                // Show popup only when all checkboxes in this activity box are completed
+                if (boxCheckedCount === boxCheckboxes.length) {
+                    // Determine which activity group this is
+                    const activityBoxes = document.querySelectorAll('.activity-box');
+                    const groupIndex = Array.from(activityBoxes).indexOf(activityBox);
+                    const groupKey = `group${groupIndex + 1}`;
+                    
+                    if (!activityGroupsCompleted[groupKey]) {
+                        activityGroupsCompleted[groupKey] = true;
+                        showModal('success', 'Activity Group Complete! 🎉', 
+                            `Great job! Make sure you actually completed these tasks in VS Code before moving on!`);
+                    }
+                }
+            }
+        }
+
+        function showModal(type, title, message) {
+            const modal = document.getElementById('modal');
+            const icon = document.getElementById('modalIcon');
+            const titleEl = document.getElementById('modalTitle');
+            const messageEl = document.getElementById('modalMessage');
+
+            if (type === 'success') {
+                icon.innerHTML = '<div class="success-icon">✅</div>';
+                icon.style.color = '#28a745';
+            } else {
+                icon.innerHTML = '<div class="error-icon">❌</div>';
+                icon.style.color = '#dc3545';
+            }
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function completeLesson() {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            
+            if (checkedBoxes < 13) {
+                showModal('error', 'Activities Incomplete', 'Please complete ALL activities before finishing the lesson!');
+                return;
+            }
+
+            // Verify all activity groups are completed
+            const allGroupsComplete = activityGroupsCompleted.group1 && 
+                                     activityGroupsCompleted.group2 && 
+                                     activityGroupsCompleted.group3;
+            
+            if (!allGroupsComplete) {
+                showModal('error', 'Not All Activities Verified', 
+                    'Please make sure you complete each activity GROUP (all checkboxes in each section) before finishing!');
+                return;
+            }
+
+            // Final confirmation
+            const confirmed = confirm(
+                '⚠️ IMPORTANT VERIFICATION ⚠️\n\n' +
+                'Did you ACTUALLY complete these activities in VS Code?\n\n' +
+                '✅ Created new files (index.html, style.css, script.js, README.md)?\n' +
+                '✅ Practiced keyboard shortcuts?\n' +
+                '✅ Created a folder structure?\n\n' +
+                'Click OK only if you truly completed these tasks.\n' +
+                'Click Cancel to go back and finish them.'
+            );
+
+            if (!confirmed) {
+                showModal('error', 'Go Complete the Activities', 
+                    'Please actually complete the activities in VS Code. Learning by doing is important!');
+                return;
+            }
+
+            showModal('success', 'Lesson Complete! 🏆', 
+                'Congratulations! You completed Lesson 02 and verified your work. Ready for Lesson 03?');
+            
+            localStorage.setItem('lesson02Complete', 'true');
+            localStorage.setItem('lesson02Verified', 'true');
+            
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 3000);
+        }
+
+        function goBack() {
+            window.location.href = '../index.html';
+        }
+
+        updateProgress(33);
+    </script>
+
+</body>
+</html>

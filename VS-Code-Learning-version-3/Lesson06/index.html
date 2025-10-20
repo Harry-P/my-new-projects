@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 06: JavaScript Interactivity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.3);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 20px 0 10px 0;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            border-left: 4px solid #a8edea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .quiz-option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-option:hover {
+            border-color: #a8edea;
+            background: #e8f4f8;
+        }
+
+        .quiz-option input[type="radio"] {
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+        .activity-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .activity-box h3 {
+            color: #a8edea;
+            margin-bottom: 15px;
+        }
+
+        .checkboxlist {
+            list-style: none;
+        }
+
+        .checkboxlist li {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkboxlist input[type="checkbox"] {
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .modal p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>⚡ Lesson 06: JavaScript Interactivity</h1>
+            <p>Make Your Webpages Come Alive!</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- A) MATERIAL SECTION -->
+            <section id="materialSection" class="section active">
+                <h2>📚 What is JavaScript?</h2>
+                
+                <p>JavaScript makes webpages <strong>interactive</strong> and <strong>alive</strong>! It's the magic that makes things happen when you click buttons, type in forms, or see animations.</p>
+
+                <div class="example-box">
+                    <h3>🎯 The Three Building Blocks</h3>
+                    <p><strong>HTML</strong> = Structure (the skeleton of your page)</p>
+                    <p><strong>CSS</strong> = Style (how it looks)</p>
+                    <p><strong>JavaScript</strong> = Behavior (what it does!)</p>
+                    <p style="margin-top: 15px;"><strong>Together, they create amazing websites! 🚀</strong></p>
+                </div>
+
+                <h3>🎮 How JavaScript Works</h3>
+                <p>JavaScript responds to <strong>events</strong> (things that happen on your page):</p>
+
+                <div class="code-box">
+                    <pre>
+Click button  →  JavaScript runs  →  Something changes
+Move mouse    →  JavaScript runs  →  Image appears
+Type text     →  JavaScript runs  →  Text updates
+                    </pre>
+                </div>
+
+                <h3>📝 Your First JavaScript Code</h3>
+                <p>Let's write some JavaScript! Here's a simple example:</p>
+
+                <div class="code-box">
+                    <pre>
+&lt;button onclick="changeText()"&gt;Click Me!&lt;/button&gt;
+
+&lt;script&gt;
+    function changeText() {
+        alert("You clicked the button! 🎉");
+    }
+&lt;/script&gt;
+                    </pre>
+                </div>
+
+                <h3>🏗️ JavaScript Basics You Need to Know</h3>
+                
+                <p><strong>1. Variables</strong> - Store information</p>
+                <div class="code-box">
+                    <pre>
+let name = "Alex";
+let age = 14;
+let isStudent = true;
+                    </pre>
+                </div>
+
+                <p><strong>2. Functions</strong> - Recipes for actions</p>
+                <div class="code-box">
+                    <pre>
+function greet() {
+    alert("Hello!");
+}
+                    </pre>
+                </div>
+
+                <p><strong>3. Changing Content</strong> - Update your page</p>
+                <div class="code-box">
+                    <pre>
+document.getElementById("message").innerHTML = "New text!";
+                    </pre>
+                </div>
+
+                <p><strong>4. Events</strong> - React to user actions</p>
+                <div class="code-box">
+                    <pre>
+&lt;button onclick="myFunction()"&gt;Click&lt;/button&gt;
+                    </pre>
+                </div>
+
+                <h3>💡 What Can You Do With JavaScript?</h3>
+                <ul style="margin-left: 30px; line-height: 2;">
+                    <li>✅ Make buttons that do things</li>
+                    <li>✅ Show and hide content</li>
+                    <li>✅ Create interactive games</li>
+                    <li>✅ Validate form inputs</li>
+                    <li>✅ Make animations and effects</li>
+                    <li>✅ Build calculators and tools</li>
+                    <li>✅ Create quizzes and surveys</li>
+                </ul>
+
+                <div class="example-box">
+                    <h3>🌟 Fun Fact!</h3>
+                    <p>JavaScript is one of the most popular programming languages in the world! Companies like Facebook, Google, Netflix, and Amazon use it every day.</p>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-primary" onclick="showQuiz()">Take the Quiz! 📝</button>
+                </div>
+            </section>
+
+            <!-- B) QUIZ SECTION -->
+            <section id="quizSection" class="section">
+                <h2>📝 Quiz Time!</h2>
+                <p>Answer all questions correctly to unlock the activities!</p>
+                <p style="margin-bottom: 30px;">Current Score: <strong><span id="quizScore">0</span>/5</strong></p>
+
+                <div class="activity-box">
+                    <h3>Question 1: What does JavaScript do?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'c')">
+                        <input type="radio" name="q1" value="a"> 
+                        <span>A) Structures the page</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'c')">
+                        <input type="radio" name="q1" value="b">
+                        <span>B) Styles the page</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'c')">
+                        <input type="radio" name="q1" value="c">
+                        <span>C) Makes the page interactive</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '1', 'c')">
+                        <input type="radio" name="q1" value="d">
+                        <span>D) Hosts the website</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 2: What is a function in JavaScript?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'b')">
+                        <input type="radio" name="q2" value="a">
+                        <span>A) A type of variable</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'b')">
+                        <input type="radio" name="q2" value="b">
+                        <span>B) A reusable block of code</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'b')">
+                        <input type="radio" name="q2" value="c">
+                        <span>C) A CSS rule</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '2', 'b')">
+                        <input type="radio" name="q2" value="d">
+                        <span>D) An HTML element</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 3: How do you find an element by its ID?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="a">
+                        <span>A) document.findId("myId")</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="b">
+                        <span>B) document.searchId("myId")</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="c">
+                        <span>C) document.getElementById("myId")</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '3', 'c')">
+                        <input type="radio" name="q3" value="d">
+                        <span>D) document.id("myId")</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 4: What does "onclick" do?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'a')">
+                        <input type="radio" name="q4" value="a">
+                        <span>A) Runs code when element is clicked</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'a')">
+                        <input type="radio" name="q4" value="b">
+                        <span>B) Changes the element's color</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'a')">
+                        <input type="radio" name="q4" value="c">
+                        <span>C) Makes element bigger</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '4', 'a')">
+                        <input type="radio" name="q4" value="d">
+                        <span>D) Deletes the element</span>
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Question 5: What does "alert()" do?</h3>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="a">
+                        <span>A) Changes page color</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="b">
+                        <span>B) Shows a popup message</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="c">
+                        <span>C) Plays a sound</span>
+                    </div>
+                    <div class="quiz-option" onclick="selectAnswer(this, '5', 'b')">
+                        <input type="radio" name="q5" value="d">
+                        <span>D) Closes the browser</span>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" onclick="showMaterial()">← Back to Material</button>
+                    <button class="btn-primary" onclick="checkQuiz()">Check Answers</button>
+                </div>
+            </section>
+
+            <!-- D) ACTIVITIES SECTION -->
+            <section id="activitiesSection" class="section">
+                <h2>🎯 Practice Activities</h2>
+                <p>Complete ALL activities in VS Code to master JavaScript! (<span id="activityCount">0</span>/15 completed)</p>
+
+                <div class="activity-box">
+                    <h3>📝 Activity 1: Create Your First Interactive Button</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create a new file called <code>button-click.html</code></li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Add a button with text "Click Me!"</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Add <code>onclick="greet()"</code> to the button</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Write a function that shows an alert saying "Hello!"</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Test it in your browser and click the button!</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>⚡ Activity 2: Change Text with JavaScript</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create <code>text-changer.html</code></li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Add a heading with <code>id="message"</code></li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Add a button to change the heading text</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Use <code>document.getElementById("message").innerHTML = "New Text!"</code></li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Test it and watch the text change!</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>🎨 Activity 3: Build a Click Counter</h3>
+                    <ul class="checkboxlist">
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create <code>counter.html</code></li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Add a variable: <code>let count = 0;</code></li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Create a function to increase count</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Display the count on the page</li>
+                        <li><input type="checkbox" onchange="checkActivity(this)"> Add a reset button to set count back to 0</li>
+                    </ul>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" onclick="showQuiz()">← Back to Quiz</button>
+                    <button class="btn-primary" onclick="completeLesson()">Complete Lesson! 🎉</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for feedback -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div id="modalIcon" class="modal-icon"></div>
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button class="btn-primary" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // Correct answers
+        const correctAnswers = {
+            '1': 'c',
+            '2': 'b',
+            '3': 'c',
+            '4': 'a',
+            '5': 'b'
+        };
+
+        let selectedAnswers = {};
+
+        function updateProgress(percentage) {
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        function showMaterial() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('materialSection').classList.add('active');
+            updateProgress(0);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function showQuiz() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('quizSection').classList.add('active');
+            updateProgress(33);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function showActivities() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('activitiesSection').classList.add('active');
+            updateProgress(66);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function selectAnswer(element, questionNum, correctAnswer) {
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            const allOptions = element.parentElement.querySelectorAll('.quiz-option');
+            allOptions.forEach(opt => {
+                opt.style.background = '#f8f9fa';
+                opt.style.borderColor = '#e0e0e0';
+            });
+            
+            element.style.background = '#e8f4f8';
+            element.style.borderColor = '#a8edea';
+            
+            selectedAnswers[questionNum] = radio.value;
+        }
+
+        function checkQuiz() {
+            let score = 0;
+            
+            for (let q in correctAnswers) {
+                if (selectedAnswers[q] === correctAnswers[q]) {
+                    score++;
+                }
+            }
+
+            document.getElementById('quizScore').textContent = score;
+
+            if (score === 5) {
+                showModal('success', 'Perfect Score! 🎉', 'You got all answers correct! Activities unlocked!');
+                setTimeout(() => {
+                    showActivities();
+                }, 2000);
+            } else {
+                showModal('error', 'Not Quite There', `You got ${score}/5 correct. Review the material and try again! You need all correct to unlock activities.`);
+            }
+        }
+
+        // Activity checking with verification
+        let activityGroupsCompleted = {
+            group1: false,
+            group2: false,
+            group3: false
+        };
+
+        function checkActivity(checkbox) {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            document.getElementById('activityCount').textContent = checkedBoxes;
+
+            // Check if all checkboxes in the current activity box are completed
+            if (checkbox.checked) {
+                const activityBox = checkbox.closest('.activity-box');
+                const boxCheckboxes = activityBox.querySelectorAll('input[type="checkbox"]');
+                const boxCheckedCount = activityBox.querySelectorAll('input[type="checkbox"]:checked').length;
+                
+                // Show popup only when all checkboxes in this activity box are completed
+                if (boxCheckedCount === boxCheckboxes.length) {
+                    // Determine which activity group this is
+                    const activityBoxes = document.querySelectorAll('.activity-box');
+                    const groupIndex = Array.from(activityBoxes).indexOf(activityBox);
+                    const groupKey = `group${groupIndex + 1}`;
+                    
+                    if (!activityGroupsCompleted[groupKey]) {
+                        activityGroupsCompleted[groupKey] = true;
+                        showModal('success', 'Activity Group Complete! 🎉', 
+                            `Great job! Make sure you actually completed these tasks in VS Code before moving on!`);
+                    }
+                }
+            }
+        }
+
+        function showModal(type, title, message) {
+            const modal = document.getElementById('modal');
+            const icon = document.getElementById('modalIcon');
+            const titleEl = document.getElementById('modalTitle');
+            const messageEl = document.getElementById('modalMessage');
+
+            if (type === 'success') {
+                icon.innerHTML = '<div class="success-icon">✅</div>';
+                icon.style.color = '#28a745';
+            } else {
+                icon.innerHTML = '<div class="error-icon">❌</div>';
+                icon.style.color = '#dc3545';
+            }
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function completeLesson() {
+            const checkedBoxes = document.querySelectorAll('.checkboxlist input[type="checkbox"]:checked').length;
+            
+            if (checkedBoxes < 15) {
+                showModal('error', 'Activities Incomplete', 'Please complete ALL activities before finishing the lesson!');
+                return;
+            }
+
+            // Verify all activity groups are completed
+            const allGroupsComplete = activityGroupsCompleted.group1 && 
+                                     activityGroupsCompleted.group2 && 
+                                     activityGroupsCompleted.group3;
+            
+            if (!allGroupsComplete) {
+                showModal('error', 'Not All Activities Verified', 
+                    'Please make sure you complete each activity GROUP (all checkboxes in each section) before finishing!');
+                return;
+            }
+
+            // Final confirmation
+            const confirmed = confirm(
+                '⚠️ IMPORTANT VERIFICATION ⚠️\n\n' +
+                'Did you ACTUALLY complete these activities in VS Code?\n\n' +
+                '✅ Created an interactive button with onclick?\n' +
+                '✅ Used getElementById to change text?\n' +
+                '✅ Built a working click counter?\n\n' +
+                'Click OK only if you truly completed these tasks.\n' +
+                'Click Cancel to go back and finish them.'
+            );
+
+            if (!confirmed) {
+                showModal('error', 'Go Complete the Activities', 
+                    'Please actually complete the activities in VS Code. Learning by doing is important!');
+                return;
+            }
+
+            showModal('success', 'Lesson Complete! 🏆', 
+                'Congratulations! You completed Lesson 06 and verified your work. Ready for Lesson 07?');
+            
+            localStorage.setItem('lesson06Complete', 'true');
+            localStorage.setItem('lesson06Verified', 'true');
+            
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 3000);
+        }
+
+        function goBack() {
+            window.location.href = '../index.html';
+        }
+
+        updateProgress(0);
+    </script>
+
+</body>
+</html>
